@@ -1,0 +1,20 @@
+{
+  "baseline_id": "internal-reference-v1",
+  "comparisons": {
+    "full": {
+      "baseline_loss": 3.7,
+      "delta_vs_baseline": 0.09999999999999964,
+      "observed_loss": 3.8
+    },
+    "small": {
+      "baseline_loss": 4.2,
+      "delta_vs_baseline": 0.09999999999999964,
+      "observed_loss": 4.3
+    },
+    "smoke": {
+      "baseline_loss": 6.0,
+      "delta_vs_baseline": -0.09999999999999964,
+      "observed_loss": 5.9
+    }
+  }
+}

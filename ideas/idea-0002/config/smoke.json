@@ -1,0 +1,16 @@
+{
+  "dataset": {
+    "dataset_name": "synthetic-shapes",
+    "description": "Toy tensors and token snippets for shape and loss validation.",
+    "target_tokens": 100000
+  },
+  "max_retries_visible": 25,
+  "novelty_claims": [
+    "Combine non-default mechanisms around: invent, phase-coupled, memory, lattice",
+    "Reject template decoder-only stacks with only cosmetic changes.",
+    "Use explicit originality rationale before implementation starts."
+  ],
+  "phase": "smoke",
+  "prefer_rocm": true,
+  "target_parameters": 600000000
+}

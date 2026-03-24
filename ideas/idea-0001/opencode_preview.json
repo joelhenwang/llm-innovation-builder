@@ -1,0 +1,9 @@
+{
+  "available": true,
+  "command": [
+    "opencode",
+    "run",
+    "Invent a recurrent memory-routed language model with anti-copy safeguards."
+  ],
+  "cwd": "/Users/joelwang/Devs/auto-llm-innovator/ideas/idea-0001"
+}

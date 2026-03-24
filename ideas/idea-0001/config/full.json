@@ -1,0 +1,16 @@
+{
+  "dataset": {
+    "dataset_name": "production-like-corpus",
+    "description": "Large corpus placeholder for full-scale training evaluation.",
+    "target_tokens": 500000000
+  },
+  "max_retries_visible": 25,
+  "novelty_claims": [
+    "Combine non-default mechanisms around: invent, recurrent, memory-routed, language",
+    "Reject template decoder-only stacks with only cosmetic changes.",
+    "Use explicit originality rationale before implementation starts."
+  ],
+  "phase": "full",
+  "prefer_rocm": true,
+  "target_parameters": 2100000000
+}

@@ -1,0 +1,35 @@
+{
+  "borrowed_mechanisms": [],
+  "creativity_directive": "Be original, avoid generic transformer defaults, and justify any borrowed mechanisms.",
+  "estimated_parameter_budget": 2100000000,
+  "evaluation_intent": "compare against internal baseline, prior runs, and public references",
+  "forbidden_fallback_patterns": [
+    "vanilla transformer",
+    "plain transformer",
+    "copy gpt",
+    "standard decoder-only stack",
+    "default llama clone"
+  ],
+  "hypothesis": "This idea can improve a general-purpose LM by exploring: invent phase-coupled memory lattice originality safeguards.",
+  "idea_id": "idea-0002",
+  "inspirations_consulted": [
+    "SOTA models may be studied for inspiration only.",
+    "Any borrowed mechanism must be declared and recombined into an original design."
+  ],
+  "intended_learning_objective": "Train a novel sub-2.1B autoregressive LM that shows learnability and promising general capabilities.",
+  "intended_model_target": "general-purpose autoregressive language model",
+  "normalized_brief": "invent phase-coupled memory lattice originality safeguards",
+  "novelty_claims": [
+    "Combine non-default mechanisms around: invent, phase-coupled, memory, lattice",
+    "Reject template decoder-only stacks with only cosmetic changes.",
+    "Use explicit originality rationale before implementation starts."
+  ],
+  "public_references": [],
+  "raw_brief": "Invent a phase-coupled memory lattice LM with originality safeguards.",
+  "tokenizer": "gpt2",
+  "training_curriculum_outline": [
+    "Smoke-test reduced variant near 600,000,000 parameters for math and logic.",
+    "Run a learnability check on the target-scale model with a small training subset.",
+    "Escalate to a production-like corpus only after the agent records why the idea looks promising."
+  ]
+}

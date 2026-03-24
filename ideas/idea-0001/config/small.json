@@ -1,0 +1,16 @@
+{
+  "dataset": {
+    "dataset_name": "small-curated-corpus",
+    "description": "Small corpus for fast learnability checks.",
+    "target_tokens": 5000000
+  },
+  "max_retries_visible": 25,
+  "novelty_claims": [
+    "Combine non-default mechanisms around: invent, recurrent, memory-routed, language",
+    "Reject template decoder-only stacks with only cosmetic changes.",
+    "Use explicit originality rationale before implementation starts."
+  ],
+  "phase": "small",
+  "prefer_rocm": true,
+  "target_parameters": 2000000000
+}

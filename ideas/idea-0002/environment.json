@@ -1,0 +1,7 @@
+{
+  "default_dtype": "float32",
+  "device_count": 0,
+  "message": "PyTorch not installed; framework will run in dry-run compatible mode.",
+  "rocm_available": false,
+  "torch_available": false
+}

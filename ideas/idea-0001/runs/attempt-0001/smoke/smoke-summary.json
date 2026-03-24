@@ -1,0 +1,16 @@
+{
+  "phase": "smoke",
+  "attempt_id": "attempt-0001",
+  "metrics": {
+    "loss": 5.9,
+    "steps": 8,
+    "target_parameters": 600000000,
+    "tokenizer": "gpt2"
+  },
+  "architecture_name": "idea_0001_creative_lm",
+  "novelty_claims": [
+    "Combine non-default mechanisms around: invent, recurrent, memory-routed, language",
+    "Reject template decoder-only stacks with only cosmetic changes.",
+    "Use explicit originality rationale before implementation starts."
+  ]
+}
