@@ -1,0 +1,59 @@
+{
+  "ad_hoc_install_blocked": true,
+  "installable_external_skills": [
+    {
+      "name": "find-skills",
+      "pinned_ref": "reviewed-2026-03-24",
+      "url": "https://skills.sh/vercel-labs/skills/find-skills"
+    },
+    {
+      "name": "deep-learning-python",
+      "pinned_ref": "reviewed-2026-03-24",
+      "url": "https://skills.sh/mindrally/skills/deep-learning-python"
+    },
+    {
+      "name": "ml-pipeline-orchestrator",
+      "pinned_ref": "reviewed-2026-03-24",
+      "url": "https://skills.sh/anton-abyzov/specweave/ml-pipeline-orchestrator"
+    },
+    {
+      "name": "systematic-debugging",
+      "pinned_ref": "reviewed-2026-03-24",
+      "url": "https://skills.sh/obra/superpowers/systematic-debugging"
+    },
+    {
+      "name": "llm-evaluation",
+      "pinned_ref": "reviewed-2026-03-24",
+      "url": "https://skills.sh/smithery/ai/llm-evaluation"
+    },
+    {
+      "name": "weights-and-biases",
+      "pinned_ref": "reviewed-2026-03-24",
+      "url": "https://skills.sh/ovachiever/droid-tings/weights-and-biases"
+    },
+    {
+      "name": "skill-creator",
+      "pinned_ref": "reviewed-2026-03-24",
+      "url": "https://skills.sh/anthropics/skills/skill-creator"
+    },
+    {
+      "name": "transformers",
+      "pinned_ref": "reviewed-2026-03-24",
+      "url": "https://skills.sh/itsmostafa/llm-engineering-skills/transformers"
+    },
+    {
+      "name": "pytorch-lightning",
+      "pinned_ref": "reviewed-2026-03-24",
+      "url": "https://skills.sh/k-dense-ai/claude-scientific-skills/pytorch-lightning"
+    }
+  ],
+  "policy_enforced": true,
+  "skipped_optional_skills": [
+    "weights-and-biases",
+    "skill-creator",
+    "transformers",
+    "pytorch-lightning",
+    "dataset-curriculum-designer",
+    "eval-suite-builder"
+  ]
+}

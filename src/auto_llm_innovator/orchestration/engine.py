@@ -12,6 +12,13 @@ from auto_llm_innovator.idea_spec import IdeaSpec, normalize_idea_spec, review_o
 from auto_llm_innovator.modeling.template import render_eval_template, render_model_template, render_train_template
 from auto_llm_innovator.orchestration.agents import agent_definitions
 from auto_llm_innovator.orchestration.opencode import OpenCodeAdapter
+from auto_llm_innovator.skills import (
+    doctor_skill_registry,
+    explain_skill_profile,
+    list_skills,
+    persist_idea_skill_snapshot,
+    sync_reviewed_skills,
+)
 from auto_llm_innovator.training import execute_phase
 from auto_llm_innovator.tracking.ledger import create_attempt_record, finalize_attempt, load_status, record_phase_result
 
@@ -65,7 +72,8 @@ class InnovatorEngine:
         write_json(idea_dir / "originality_review.json", originality.to_dict())
         write_json(idea_dir / "environment.json", probe_environment().to_dict())
         write_json(idea_dir / "opencode_preview.json", self.opencode.command_preview("run", spec.raw_brief, idea_dir))
-        write_json(idea_dir / "orchestration" / "agents.json", agent_definitions(spec))
+        write_json(idea_dir / "orchestration" / "agents.json", agent_definitions(spec, root=self.root))
+        persist_idea_skill_snapshot(self.root, idea_dir, spec.idea_id)
         write_text(idea_dir / "notes" / "design.md", self._design_notes(spec, originality))
         write_text(idea_dir / "notes" / "orchestration.md", self._orchestration_notes(spec))
         self._write_plugin_bundle(idea_dir, spec)
@@ -170,6 +178,14 @@ class InnovatorEngine:
         for current_phase in phases:
             phase_dir = ensure_dir(run_dir / current_phase)
             result = execute_phase(idea_dir=idea_dir, attempt_id=attempt_id, phase=current_phase, run_dir=phase_dir)
+            skill_usage = {
+                "phase": current_phase,
+                "roles": {role: explain_skill_profile(self.root, role, phase=current_phase) for role in agent_definitions(spec, root=self.root)},
+            }
+            skill_usage_path = phase_dir / "skills.json"
+            write_json(skill_usage_path, skill_usage)
+            result.artifacts_produced.append(str(skill_usage_path))
+            result.reviewer_notes.append("Skill activation snapshot recorded.")
             record_phase_result(idea_dir, result)
             results.append(result)
 
@@ -179,7 +195,8 @@ class InnovatorEngine:
         status = read_json(idea_dir / "status.json")
         status["latest_report"] = str(report_path)
         write_json(idea_dir / "status.json", status)
-        finalize_attempt(idea_dir, attempt_id, "completed")
+        final_state = "completed" if phases[-1] == "full" else "partial"
+        finalize_attempt(idea_dir, attempt_id, final_state)
         return {
             "idea_id": idea_id,
             "attempt_id": attempt_id,
@@ -223,3 +240,15 @@ class InnovatorEngine:
 
             results.append(PhaseResult(**phase_payload))
         return compare_against_baseline(baseline_manifest, results)
+
+    def skills_list(self) -> dict:
+        return list_skills(self.root)
+
+    def skills_doctor(self) -> dict:
+        return doctor_skill_registry(self.root)
+
+    def skills_explain(self, role: str, phase: str | None = None) -> dict:
+        return explain_skill_profile(self.root, role, phase=phase)
+
+    def skills_sync(self) -> dict:
+        return sync_reviewed_skills(self.root)

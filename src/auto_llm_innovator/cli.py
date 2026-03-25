@@ -32,6 +32,16 @@ def build_parser() -> argparse.ArgumentParser:
     report = subparsers.add_parser("report", help="Show latest decision report")
     report.add_argument("idea_id")
 
+    skills = subparsers.add_parser("skills", help="Inspect curated skill registry and routing")
+    skill_parsers = skills.add_subparsers(dest="skills_command", required=True)
+
+    skill_parsers.add_parser("list", help="List reviewed skills in the registry")
+    skill_parsers.add_parser("doctor", help="Validate the local skill registry and internal skill files")
+    explain = skill_parsers.add_parser("explain", help="Explain which skills a role uses")
+    explain.add_argument("role", choices=["planner", "implementer", "debugger", "trainer", "evaluator", "reviewer"])
+    explain.add_argument("--phase", choices=["smoke", "small", "full"], default=None)
+    skill_parsers.add_parser("sync", help="Materialize the reviewed external skill sync manifest")
+
     return parser
 
 
@@ -59,6 +69,19 @@ def main(argv: list[str] | None = None) -> int:
     if args.command == "report":
         print(engine.report(args.idea_id))
         return 0
+    if args.command == "skills":
+        if args.skills_command == "list":
+            print(json.dumps(engine.skills_list(), indent=2))
+            return 0
+        if args.skills_command == "doctor":
+            print(json.dumps(engine.skills_doctor(), indent=2))
+            return 0
+        if args.skills_command == "explain":
+            print(json.dumps(engine.skills_explain(args.role, phase=args.phase), indent=2))
+            return 0
+        if args.skills_command == "sync":
+            print(json.dumps(engine.skills_sync(), indent=2))
+            return 0
 
     parser.error(f"Unhandled command: {args.command}")
     return 2

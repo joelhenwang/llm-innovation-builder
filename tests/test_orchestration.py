@@ -32,6 +32,8 @@ def test_submit_creates_idea_bundle(tmp_path: Path):
     assert (idea_dir / "train.py").exists()
     assert (idea_dir / "eval.py").exists()
     assert (idea_dir / "config" / "smoke.json").exists()
+    assert (idea_dir / "orchestration" / "skills.json").exists()
+    assert (idea_dir / "orchestration" / "skill-decisions.md").exists()
 
 
 def test_full_run_records_attempts_without_overwrite(tmp_path: Path):
@@ -46,6 +48,7 @@ def test_full_run_records_attempts_without_overwrite(tmp_path: Path):
     assert len(status["attempts"]) == 2
     assert "smoke" in status["attempts"][0]["phases"]
     assert (tmp_path / "ideas" / result.idea_id / "reports" / "attempt-0001.md").exists()
+    assert (tmp_path / "ideas" / result.idea_id / "runs" / "attempt-0001" / "smoke" / "skills.json").exists()
 
 
 def test_compare_and_report(tmp_path: Path):
@@ -57,3 +60,12 @@ def test_compare_and_report(tmp_path: Path):
     report = engine.report(result.idea_id)
     assert comparison["baseline_id"] == "internal-reference-v1"
     assert "Decision Report" in report
+
+
+def test_partial_run_marks_attempt_partial(tmp_path: Path):
+    _bootstrap_baseline(tmp_path)
+    engine = InnovatorEngine(root=tmp_path)
+    result = engine.submit("Invent a multi-timescale residual mixer with originality constraints.")
+    engine.run(result.idea_id, phase="smoke")
+    status = engine.status(result.idea_id)
+    assert status["attempts"][0]["state"] == "partial"

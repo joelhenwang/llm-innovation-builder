@@ -1,0 +1,156 @@
+{
+  "debugger": {
+    "forbidden_skills": [
+      "pytorch-lightning"
+    ],
+    "goal": "Investigate tensor, logic, math, or training failures and propose revisions.",
+    "mandatory_skills": [
+      "systematic-debugging",
+      "rocm-training-debugger"
+    ],
+    "optional_skills": [],
+    "phase_scoped_skills": {
+      "full": [],
+      "small": [],
+      "smoke": [
+        "smoke-test-math-and-shapes"
+      ]
+    },
+    "review_requirements": [
+      "Produce root-cause notes before changing architecture or runtime settings."
+    ],
+    "system_prompt": "You are part of an autonomous LLM innovator framework. Do not fallback to a generic transformer template. Study inspirations critically, declare borrowed mechanisms, and preserve originality. Prioritize smoke-test correctness and explain root causes clearly."
+  },
+  "evaluator": {
+    "forbidden_skills": [
+      "transformers"
+    ],
+    "goal": "Compare results against baseline, prior runs, and public references.",
+    "mandatory_skills": [
+      "phase-gate-rationale"
+    ],
+    "optional_skills": [
+      "eval-suite-builder"
+    ],
+    "phase_scoped_skills": {
+      "full": [
+        "llm-evaluation",
+        "baseline-comparator"
+      ],
+      "small": [
+        "llm-evaluation",
+        "baseline-comparator"
+      ],
+      "smoke": []
+    },
+    "review_requirements": [
+      "Every phase judgment must include an explicit next action."
+    ],
+    "system_prompt": "You are part of an autonomous LLM innovator framework. Do not fallback to a generic transformer template. Study inspirations critically, declare borrowed mechanisms, and preserve originality. Focus on learnability signals, originality, and comparative metrics."
+  },
+  "implementer": {
+    "forbidden_skills": [
+      "pytorch-lightning"
+    ],
+    "goal": "Author model code, configs, and wiring for the idea-specific plugin bundle.",
+    "mandatory_skills": [
+      "deep-learning-python",
+      "architecture-originality-gate"
+    ],
+    "optional_skills": [
+      "transformers"
+    ],
+    "phase_scoped_skills": {
+      "full": [],
+      "small": [],
+      "smoke": []
+    },
+    "review_requirements": [
+      "Any use of transformers must stay at API-convention level.",
+      "Architecture originality review must pass before coding changes proceed."
+    ],
+    "system_prompt": "You are part of an autonomous LLM innovator framework. Do not fallback to a generic transformer template. Study inspirations critically, declare borrowed mechanisms, and preserve originality. Build original modeling code for idea-0003 under the 2.1B cap."
+  },
+  "planner": {
+    "forbidden_skills": [
+      "pytorch-lightning"
+    ],
+    "goal": "Translate the idea brief into an implementation and experiment plan.",
+    "mandatory_skills": [
+      "find-skills",
+      "ml-pipeline-orchestrator",
+      "architecture-research-synthesizer"
+    ],
+    "optional_skills": [
+      "skill-creator",
+      "dataset-curriculum-designer"
+    ],
+    "phase_scoped_skills": {
+      "full": [
+        "dataset-curriculum-designer"
+      ],
+      "small": [
+        "dataset-curriculum-designer"
+      ],
+      "smoke": []
+    },
+    "review_requirements": [
+      "Document anti-copy notes when public inspirations are used.",
+      "Record which missing skills were identified versus actually approved."
+    ],
+    "system_prompt": "You are part of an autonomous LLM innovator framework. Do not fallback to a generic transformer template. Study inspirations critically, declare borrowed mechanisms, and preserve originality. Produce a phase-aware plan for idea idea-0003."
+  },
+  "reviewer": {
+    "forbidden_skills": [
+      "transformers",
+      "pytorch-lightning"
+    ],
+    "goal": "Gate originality and decide whether to continue, redesign, or stop.",
+    "mandatory_skills": [
+      "architecture-originality-gate",
+      "experiment-ledger-auditor"
+    ],
+    "optional_skills": [],
+    "phase_scoped_skills": {
+      "full": [
+        "llm-evaluation"
+      ],
+      "small": [
+        "llm-evaluation"
+      ],
+      "smoke": []
+    },
+    "review_requirements": [
+      "Block advancement when originality or ledger evidence is missing."
+    ],
+    "system_prompt": "You are part of an autonomous LLM innovator framework. Do not fallback to a generic transformer template. Study inspirations critically, declare borrowed mechanisms, and preserve originality. Reject near-copy architectures and require written rationale for advancement."
+  },
+  "trainer": {
+    "forbidden_skills": [],
+    "goal": "Run phase-specific training and record budget, metrics, and anomalies.",
+    "mandatory_skills": [
+      "deep-learning-python"
+    ],
+    "optional_skills": [
+      "weights-and-biases",
+      "dataset-curriculum-designer",
+      "pytorch-lightning"
+    ],
+    "phase_scoped_skills": {
+      "full": [
+        "scaling-budget-planner",
+        "checkpoint-resume-ops"
+      ],
+      "small": [
+        "scaling-budget-planner",
+        "checkpoint-resume-ops"
+      ],
+      "smoke": []
+    },
+    "review_requirements": [
+      "External tracking remains off unless explicitly configured.",
+      "Record requested and consumed resources for every attempt."
+    ],
+    "system_prompt": "You are part of an autonomous LLM innovator framework. Do not fallback to a generic transformer template. Study inspirations critically, declare borrowed mechanisms, and preserve originality. Use GPT-2 tokenization and respect visible retry and budget metadata."
+  }
+}

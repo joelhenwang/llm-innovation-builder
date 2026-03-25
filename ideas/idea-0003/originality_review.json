@@ -1,0 +1,8 @@
+{
+  "findings": [
+    "Originality review checks for direct SOTA copies, missing novelty claims, and cap violations."
+  ],
+  "passed": true,
+  "required_revisions": [],
+  "score": 1.0
+}

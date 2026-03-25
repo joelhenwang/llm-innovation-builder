@@ -64,3 +64,14 @@ def test_cli_lifecycle(tmp_path: Path):
     )
     status_payload = json.loads(status.stdout)
     assert status_payload["attempts"][0]["attempt_id"] == "attempt-0001"
+
+    skills = subprocess.run(
+        [sys.executable, "-m", "auto_llm_innovator", "--root", str(tmp_path), "skills", "explain", "reviewer", "--phase", "small"],
+        capture_output=True,
+        text=True,
+        check=True,
+        env=env,
+    )
+    skills_payload = json.loads(skills.stdout)
+    assert skills_payload["agent_role"] == "reviewer"
+    assert any(item["name"] == "architecture-originality-gate" for item in skills_payload["active"])
