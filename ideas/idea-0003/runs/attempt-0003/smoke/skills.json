@@ -1,0 +1,747 @@
+{
+  "phase": "smoke",
+  "roles": {
+    "debugger": {
+      "active_skills": [
+        {
+          "activation_reason": "always_on",
+          "guardrails": [
+            "Prefer diagnosis over trial-and-error patching."
+          ],
+          "name": "systematic-debugging",
+          "optional": false,
+          "outputs": [
+            "root-cause-analysis",
+            "fix-plan"
+          ],
+          "phases": [
+            "smoke",
+            "small",
+            "full"
+          ],
+          "pinned_ref": "reviewed-2026-03-24",
+          "reviewed": true,
+          "roles": [
+            "debugger",
+            "trainer"
+          ],
+          "source": {
+            "type": "external",
+            "url": "https://skills.sh/obra/superpowers/systematic-debugging"
+          },
+          "summary": "Root-cause debugging workflow for model and training failures.",
+          "trigger_conditions": [
+            "Activate on tensor, math, runtime, convergence, or checkpoint failures."
+          ]
+        },
+        {
+          "activation_reason": "always_on",
+          "guardrails": [
+            "Prefer preserving ROCm compatibility over silently switching frameworks."
+          ],
+          "name": "rocm-training-debugger",
+          "optional": false,
+          "outputs": [
+            "rocm-debug-notes",
+            "device-fallback-plan"
+          ],
+          "phases": [
+            "smoke",
+            "small",
+            "full"
+          ],
+          "pinned_ref": "repo",
+          "resolved_path": "/Users/joelwang/Devs/auto-llm-innovator/skills/internal/rocm-training-debugger/SKILL.md",
+          "reviewed": true,
+          "roles": [
+            "debugger"
+          ],
+          "source": {
+            "path": "skills/internal/rocm-training-debugger/SKILL.md",
+            "type": "internal"
+          },
+          "summary": "ROCm-first troubleshooting for runtime, dtype, memory, and kernel issues.",
+          "trigger_conditions": [
+            "Use when device, HIP, compile, memory, or dtype failures occur."
+          ]
+        },
+        {
+          "activation_reason": "phase:smoke",
+          "guardrails": [
+            "Require tiny-batch overfit or equivalent sanity evidence before passing smoke."
+          ],
+          "name": "smoke-test-math-and-shapes",
+          "optional": false,
+          "outputs": [
+            "shape-checklist",
+            "math-sanity-report"
+          ],
+          "phases": [
+            "smoke"
+          ],
+          "pinned_ref": "repo",
+          "resolved_path": "/Users/joelwang/Devs/auto-llm-innovator/skills/internal/smoke-test-math-and-shapes/SKILL.md",
+          "reviewed": true,
+          "roles": [
+            "debugger"
+          ],
+          "source": {
+            "path": "skills/internal/smoke-test-math-and-shapes/SKILL.md",
+            "type": "internal"
+          },
+          "summary": "Validate forward math, tensor shapes, gradients, and tiny-batch sanity.",
+          "trigger_conditions": [
+            "Use whenever smoke tests fail or a new architecture is introduced."
+          ]
+        }
+      ],
+      "injected_skills": [
+        {
+          "activation_reason": "always_on",
+          "guardrails": [
+            "Prefer diagnosis over trial-and-error patching."
+          ],
+          "name": "systematic-debugging",
+          "optional": false,
+          "outputs": [
+            "root-cause-analysis",
+            "fix-plan"
+          ],
+          "phases": [
+            "smoke",
+            "small",
+            "full"
+          ],
+          "pinned_ref": "reviewed-2026-03-24",
+          "reviewed": true,
+          "roles": [
+            "debugger",
+            "trainer"
+          ],
+          "source": {
+            "type": "external",
+            "url": "https://skills.sh/obra/superpowers/systematic-debugging"
+          },
+          "summary": "Root-cause debugging workflow for model and training failures.",
+          "trigger_conditions": [
+            "Activate on tensor, math, runtime, convergence, or checkpoint failures."
+          ]
+        },
+        {
+          "activation_reason": "always_on",
+          "guardrails": [
+            "Prefer preserving ROCm compatibility over silently switching frameworks."
+          ],
+          "name": "rocm-training-debugger",
+          "optional": false,
+          "outputs": [
+            "rocm-debug-notes",
+            "device-fallback-plan"
+          ],
+          "phases": [
+            "smoke",
+            "small",
+            "full"
+          ],
+          "pinned_ref": "repo",
+          "resolved_path": "/Users/joelwang/Devs/auto-llm-innovator/skills/internal/rocm-training-debugger/SKILL.md",
+          "reviewed": true,
+          "roles": [
+            "debugger"
+          ],
+          "source": {
+            "path": "skills/internal/rocm-training-debugger/SKILL.md",
+            "type": "internal"
+          },
+          "summary": "ROCm-first troubleshooting for runtime, dtype, memory, and kernel issues.",
+          "trigger_conditions": [
+            "Use when device, HIP, compile, memory, or dtype failures occur."
+          ]
+        },
+        {
+          "activation_reason": "phase:smoke",
+          "guardrails": [
+            "Require tiny-batch overfit or equivalent sanity evidence before passing smoke."
+          ],
+          "name": "smoke-test-math-and-shapes",
+          "optional": false,
+          "outputs": [
+            "shape-checklist",
+            "math-sanity-report"
+          ],
+          "phases": [
+            "smoke"
+          ],
+          "pinned_ref": "repo",
+          "resolved_path": "/Users/joelwang/Devs/auto-llm-innovator/skills/internal/smoke-test-math-and-shapes/SKILL.md",
+          "reviewed": true,
+          "roles": [
+            "debugger"
+          ],
+          "source": {
+            "path": "skills/internal/smoke-test-math-and-shapes/SKILL.md",
+            "type": "internal"
+          },
+          "summary": "Validate forward math, tensor shapes, gradients, and tiny-batch sanity.",
+          "trigger_conditions": [
+            "Use whenever smoke tests fail or a new architecture is introduced."
+          ]
+        }
+      ],
+      "skipped_skills": []
+    },
+    "evaluator": {
+      "active_skills": [
+        {
+          "activation_reason": "always_on",
+          "guardrails": [
+            "Do not advance without explicit rationale grounded in evidence."
+          ],
+          "name": "phase-gate-rationale",
+          "optional": false,
+          "outputs": [
+            "phase-gate-report"
+          ],
+          "phases": [
+            "smoke",
+            "small",
+            "full"
+          ],
+          "pinned_ref": "repo",
+          "resolved_path": "/Users/joelwang/Devs/auto-llm-innovator/skills/internal/phase-gate-rationale/SKILL.md",
+          "reviewed": true,
+          "roles": [
+            "evaluator"
+          ],
+          "source": {
+            "path": "skills/internal/phase-gate-rationale/SKILL.md",
+            "type": "internal"
+          },
+          "summary": "Turn logs and metrics into continue, pivot, or stop judgments.",
+          "trigger_conditions": [
+            "Use after every phase to produce a written next-action decision."
+          ]
+        }
+      ],
+      "injected_skills": [
+        {
+          "activation_reason": "always_on",
+          "guardrails": [
+            "Do not advance without explicit rationale grounded in evidence."
+          ],
+          "name": "phase-gate-rationale",
+          "optional": false,
+          "outputs": [
+            "phase-gate-report"
+          ],
+          "phases": [
+            "smoke",
+            "small",
+            "full"
+          ],
+          "pinned_ref": "repo",
+          "resolved_path": "/Users/joelwang/Devs/auto-llm-innovator/skills/internal/phase-gate-rationale/SKILL.md",
+          "reviewed": true,
+          "roles": [
+            "evaluator"
+          ],
+          "source": {
+            "path": "skills/internal/phase-gate-rationale/SKILL.md",
+            "type": "internal"
+          },
+          "summary": "Turn logs and metrics into continue, pivot, or stop judgments.",
+          "trigger_conditions": [
+            "Use after every phase to produce a written next-action decision."
+          ]
+        }
+      ],
+      "skipped_skills": []
+    },
+    "implementer": {
+      "active_skills": [
+        {
+          "activation_reason": "always_on",
+          "guardrails": [
+            "Use as coding guidance only; do not copy baseline architectures."
+          ],
+          "name": "deep-learning-python",
+          "optional": false,
+          "outputs": [
+            "pytorch-guidance",
+            "training-best-practices"
+          ],
+          "phases": [
+            "smoke",
+            "small",
+            "full"
+          ],
+          "pinned_ref": "reviewed-2026-03-24",
+          "reviewed": true,
+          "roles": [
+            "implementer",
+            "trainer"
+          ],
+          "source": {
+            "type": "external",
+            "url": "https://skills.sh/mindrally/skills/deep-learning-python"
+          },
+          "summary": "General PyTorch training, optimization, and modeling hygiene.",
+          "trigger_conditions": [
+            "Activate for model authoring, optimizer setup, and training loop implementation."
+          ]
+        },
+        {
+          "activation_reason": "always_on",
+          "guardrails": [
+            "Reject generic transformer drift even if reference skills are available."
+          ],
+          "name": "architecture-originality-gate",
+          "optional": false,
+          "outputs": [
+            "originality-review",
+            "revision-instructions"
+          ],
+          "phases": [
+            "smoke",
+            "small",
+            "full"
+          ],
+          "pinned_ref": "repo",
+          "resolved_path": "/Users/joelwang/Devs/auto-llm-innovator/skills/internal/architecture-originality-gate/SKILL.md",
+          "reviewed": true,
+          "roles": [
+            "implementer",
+            "reviewer"
+          ],
+          "source": {
+            "path": "skills/internal/architecture-originality-gate/SKILL.md",
+            "type": "internal"
+          },
+          "summary": "Reject generic transformer drift and near-copy architectures before implementation or advancement.",
+          "trigger_conditions": [
+            "Activate before coding, before retries, and before advancing phases."
+          ]
+        }
+      ],
+      "injected_skills": [
+        {
+          "activation_reason": "always_on",
+          "guardrails": [
+            "Use as coding guidance only; do not copy baseline architectures."
+          ],
+          "name": "deep-learning-python",
+          "optional": false,
+          "outputs": [
+            "pytorch-guidance",
+            "training-best-practices"
+          ],
+          "phases": [
+            "smoke",
+            "small",
+            "full"
+          ],
+          "pinned_ref": "reviewed-2026-03-24",
+          "reviewed": true,
+          "roles": [
+            "implementer",
+            "trainer"
+          ],
+          "source": {
+            "type": "external",
+            "url": "https://skills.sh/mindrally/skills/deep-learning-python"
+          },
+          "summary": "General PyTorch training, optimization, and modeling hygiene.",
+          "trigger_conditions": [
+            "Activate for model authoring, optimizer setup, and training loop implementation."
+          ]
+        },
+        {
+          "activation_reason": "always_on",
+          "guardrails": [
+            "Reject generic transformer drift even if reference skills are available."
+          ],
+          "name": "architecture-originality-gate",
+          "optional": false,
+          "outputs": [
+            "originality-review",
+            "revision-instructions"
+          ],
+          "phases": [
+            "smoke",
+            "small",
+            "full"
+          ],
+          "pinned_ref": "repo",
+          "resolved_path": "/Users/joelwang/Devs/auto-llm-innovator/skills/internal/architecture-originality-gate/SKILL.md",
+          "reviewed": true,
+          "roles": [
+            "implementer",
+            "reviewer"
+          ],
+          "source": {
+            "path": "skills/internal/architecture-originality-gate/SKILL.md",
+            "type": "internal"
+          },
+          "summary": "Reject generic transformer drift and near-copy architectures before implementation or advancement.",
+          "trigger_conditions": [
+            "Activate before coding, before retries, and before advancing phases."
+          ]
+        }
+      ],
+      "skipped_skills": []
+    },
+    "planner": {
+      "active_skills": [
+        {
+          "activation_reason": "always_on",
+          "guardrails": [
+            "Do not auto-install any discovered skill during autonomous experiments."
+          ],
+          "name": "find-skills",
+          "optional": false,
+          "outputs": [
+            "candidate-skill-list",
+            "skill-gap-notes"
+          ],
+          "phases": [
+            "all"
+          ],
+          "pinned_ref": "reviewed-2026-03-24",
+          "reviewed": true,
+          "roles": [
+            "planner"
+          ],
+          "source": {
+            "type": "external",
+            "url": "https://skills.sh/vercel-labs/skills/find-skills"
+          },
+          "summary": "Discover future skill gaps and catalog candidates from the public directory.",
+          "trigger_conditions": [
+            "Use when the planner needs to identify missing skills or future capability gaps."
+          ]
+        },
+        {
+          "activation_reason": "always_on",
+          "guardrails": [
+            "Do not let orchestration advice override originality requirements."
+          ],
+          "name": "ml-pipeline-orchestrator",
+          "optional": false,
+          "outputs": [
+            "pipeline-structure",
+            "experiment-plan"
+          ],
+          "phases": [
+            "all"
+          ],
+          "pinned_ref": "reviewed-2026-03-24",
+          "reviewed": true,
+          "roles": [
+            "planner"
+          ],
+          "source": {
+            "type": "external",
+            "url": "https://skills.sh/anton-abyzov/specweave/ml-pipeline-orchestrator"
+          },
+          "summary": "Patterns for structured experiment flow and reproducible ML pipelines.",
+          "trigger_conditions": [
+            "Use when translating an idea into a tracked sequence of phases and retries."
+          ]
+        },
+        {
+          "activation_reason": "always_on",
+          "guardrails": [
+            "Convert inspirations into constraints and recombination options, not copy recipes."
+          ],
+          "name": "architecture-research-synthesizer",
+          "optional": false,
+          "outputs": [
+            "research-synthesis"
+          ],
+          "phases": [
+            "all"
+          ],
+          "pinned_ref": "repo",
+          "resolved_path": "/Users/joelwang/Devs/auto-llm-innovator/skills/internal/architecture-research-synthesizer/SKILL.md",
+          "reviewed": true,
+          "roles": [
+            "planner"
+          ],
+          "source": {
+            "path": "skills/internal/architecture-research-synthesizer/SKILL.md",
+            "type": "internal"
+          },
+          "summary": "Distill inspirations into design constraints, opportunities, and anti-copy notes.",
+          "trigger_conditions": [
+            "Use when the planner studies external ideas and needs original synthesis."
+          ]
+        }
+      ],
+      "injected_skills": [
+        {
+          "activation_reason": "always_on",
+          "guardrails": [
+            "Do not let orchestration advice override originality requirements."
+          ],
+          "name": "ml-pipeline-orchestrator",
+          "optional": false,
+          "outputs": [
+            "pipeline-structure",
+            "experiment-plan"
+          ],
+          "phases": [
+            "all"
+          ],
+          "pinned_ref": "reviewed-2026-03-24",
+          "reviewed": true,
+          "roles": [
+            "planner"
+          ],
+          "source": {
+            "type": "external",
+            "url": "https://skills.sh/anton-abyzov/specweave/ml-pipeline-orchestrator"
+          },
+          "summary": "Patterns for structured experiment flow and reproducible ML pipelines.",
+          "trigger_conditions": [
+            "Use when translating an idea into a tracked sequence of phases and retries."
+          ]
+        },
+        {
+          "activation_reason": "always_on",
+          "guardrails": [
+            "Convert inspirations into constraints and recombination options, not copy recipes."
+          ],
+          "name": "architecture-research-synthesizer",
+          "optional": false,
+          "outputs": [
+            "research-synthesis"
+          ],
+          "phases": [
+            "all"
+          ],
+          "pinned_ref": "repo",
+          "resolved_path": "/Users/joelwang/Devs/auto-llm-innovator/skills/internal/architecture-research-synthesizer/SKILL.md",
+          "reviewed": true,
+          "roles": [
+            "planner"
+          ],
+          "source": {
+            "path": "skills/internal/architecture-research-synthesizer/SKILL.md",
+            "type": "internal"
+          },
+          "summary": "Distill inspirations into design constraints, opportunities, and anti-copy notes.",
+          "trigger_conditions": [
+            "Use when the planner studies external ideas and needs original synthesis."
+          ]
+        }
+      ],
+      "skipped_skills": [
+        {
+          "activation_reason": "always_on",
+          "name": "find-skills",
+          "reason": "Only inject when the planner is explicitly searching for missing capabilities."
+        }
+      ]
+    },
+    "reviewer": {
+      "active_skills": [
+        {
+          "activation_reason": "always_on",
+          "guardrails": [
+            "Reject generic transformer drift even if reference skills are available."
+          ],
+          "name": "architecture-originality-gate",
+          "optional": false,
+          "outputs": [
+            "originality-review",
+            "revision-instructions"
+          ],
+          "phases": [
+            "smoke",
+            "small",
+            "full"
+          ],
+          "pinned_ref": "repo",
+          "resolved_path": "/Users/joelwang/Devs/auto-llm-innovator/skills/internal/architecture-originality-gate/SKILL.md",
+          "reviewed": true,
+          "roles": [
+            "implementer",
+            "reviewer"
+          ],
+          "source": {
+            "path": "skills/internal/architecture-originality-gate/SKILL.md",
+            "type": "internal"
+          },
+          "summary": "Reject generic transformer drift and near-copy architectures before implementation or advancement.",
+          "trigger_conditions": [
+            "Activate before coding, before retries, and before advancing phases."
+          ]
+        },
+        {
+          "activation_reason": "always_on",
+          "guardrails": [
+            "Block advancement if provenance or artifacts are missing."
+          ],
+          "name": "experiment-ledger-auditor",
+          "optional": false,
+          "outputs": [
+            "ledger-audit"
+          ],
+          "phases": [
+            "smoke",
+            "small",
+            "full"
+          ],
+          "pinned_ref": "repo",
+          "resolved_path": "/Users/joelwang/Devs/auto-llm-innovator/skills/internal/experiment-ledger-auditor/SKILL.md",
+          "reviewed": true,
+          "roles": [
+            "reviewer"
+          ],
+          "source": {
+            "path": "skills/internal/experiment-ledger-auditor/SKILL.md",
+            "type": "internal"
+          },
+          "summary": "Ensure retries, budgets, artifacts, and lineage are persisted before new attempts.",
+          "trigger_conditions": [
+            "Use before retries and before issuing final reports."
+          ]
+        }
+      ],
+      "injected_skills": [
+        {
+          "activation_reason": "always_on",
+          "guardrails": [
+            "Reject generic transformer drift even if reference skills are available."
+          ],
+          "name": "architecture-originality-gate",
+          "optional": false,
+          "outputs": [
+            "originality-review",
+            "revision-instructions"
+          ],
+          "phases": [
+            "smoke",
+            "small",
+            "full"
+          ],
+          "pinned_ref": "repo",
+          "resolved_path": "/Users/joelwang/Devs/auto-llm-innovator/skills/internal/architecture-originality-gate/SKILL.md",
+          "reviewed": true,
+          "roles": [
+            "implementer",
+            "reviewer"
+          ],
+          "source": {
+            "path": "skills/internal/architecture-originality-gate/SKILL.md",
+            "type": "internal"
+          },
+          "summary": "Reject generic transformer drift and near-copy architectures before implementation or advancement.",
+          "trigger_conditions": [
+            "Activate before coding, before retries, and before advancing phases."
+          ]
+        },
+        {
+          "activation_reason": "always_on",
+          "guardrails": [
+            "Block advancement if provenance or artifacts are missing."
+          ],
+          "name": "experiment-ledger-auditor",
+          "optional": false,
+          "outputs": [
+            "ledger-audit"
+          ],
+          "phases": [
+            "smoke",
+            "small",
+            "full"
+          ],
+          "pinned_ref": "repo",
+          "resolved_path": "/Users/joelwang/Devs/auto-llm-innovator/skills/internal/experiment-ledger-auditor/SKILL.md",
+          "reviewed": true,
+          "roles": [
+            "reviewer"
+          ],
+          "source": {
+            "path": "skills/internal/experiment-ledger-auditor/SKILL.md",
+            "type": "internal"
+          },
+          "summary": "Ensure retries, budgets, artifacts, and lineage are persisted before new attempts.",
+          "trigger_conditions": [
+            "Use before retries and before issuing final reports."
+          ]
+        }
+      ],
+      "skipped_skills": []
+    },
+    "trainer": {
+      "active_skills": [
+        {
+          "activation_reason": "always_on",
+          "guardrails": [
+            "Use as coding guidance only; do not copy baseline architectures."
+          ],
+          "name": "deep-learning-python",
+          "optional": false,
+          "outputs": [
+            "pytorch-guidance",
+            "training-best-practices"
+          ],
+          "phases": [
+            "smoke",
+            "small",
+            "full"
+          ],
+          "pinned_ref": "reviewed-2026-03-24",
+          "reviewed": true,
+          "roles": [
+            "implementer",
+            "trainer"
+          ],
+          "source": {
+            "type": "external",
+            "url": "https://skills.sh/mindrally/skills/deep-learning-python"
+          },
+          "summary": "General PyTorch training, optimization, and modeling hygiene.",
+          "trigger_conditions": [
+            "Activate for model authoring, optimizer setup, and training loop implementation."
+          ]
+        }
+      ],
+      "injected_skills": [
+        {
+          "activation_reason": "always_on",
+          "guardrails": [
+            "Use as coding guidance only; do not copy baseline architectures."
+          ],
+          "name": "deep-learning-python",
+          "optional": false,
+          "outputs": [
+            "pytorch-guidance",
+            "training-best-practices"
+          ],
+          "phases": [
+            "smoke",
+            "small",
+            "full"
+          ],
+          "pinned_ref": "reviewed-2026-03-24",
+          "reviewed": true,
+          "roles": [
+            "implementer",
+            "trainer"
+          ],
+          "source": {
+            "type": "external",
+            "url": "https://skills.sh/mindrally/skills/deep-learning-python"
+          },
+          "summary": "General PyTorch training, optimization, and modeling hygiene.",
+          "trigger_conditions": [
+            "Activate for model authoring, optimizer setup, and training loop implementation."
+          ]
+        }
+      ],
+      "skipped_skills": []
+    }
+  }
+}

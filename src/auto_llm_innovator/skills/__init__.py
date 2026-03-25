@@ -1,3 +1,4 @@
+from .prompt_builder import PromptBuildResult, build_agent_prompt
 from .registry import (
     build_idea_skill_snapshot,
     doctor_skill_registry,
@@ -9,6 +10,8 @@ from .registry import (
 )
 
 __all__ = [
+    "PromptBuildResult",
+    "build_agent_prompt",
     "build_idea_skill_snapshot",
     "doctor_skill_registry",
     "explain_skill_profile",

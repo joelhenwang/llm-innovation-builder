@@ -75,3 +75,26 @@ def test_cli_lifecycle(tmp_path: Path):
     skills_payload = json.loads(skills.stdout)
     assert skills_payload["agent_role"] == "reviewer"
     assert any(item["name"] == "architecture-originality-gate" for item in skills_payload["active"])
+
+    prompt_view = subprocess.run(
+        [
+            sys.executable,
+            "-m",
+            "auto_llm_innovator",
+            "--root",
+            str(tmp_path),
+            "skills",
+            "explain",
+            "implementer",
+            "--phase",
+            "small",
+            "--prompt-view",
+        ],
+        capture_output=True,
+        text=True,
+        check=True,
+        env=env,
+    )
+    prompt_payload = json.loads(prompt_view.stdout)
+    assert prompt_payload["role"] == "implementer"
+    assert any(item["name"] == "architecture-originality-gate" for item in prompt_payload["injected_skills"])

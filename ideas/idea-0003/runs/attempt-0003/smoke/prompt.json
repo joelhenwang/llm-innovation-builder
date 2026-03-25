@@ -1,0 +1,858 @@
+{
+  "attempt_id": "attempt-0003",
+  "idea_id": "idea-0003",
+  "phase": "smoke",
+  "roles": {
+    "debugger": {
+      "active_skills": [
+        {
+          "activation_reason": "always_on",
+          "guardrails": [
+            "Prefer diagnosis over trial-and-error patching."
+          ],
+          "name": "systematic-debugging",
+          "optional": false,
+          "outputs": [
+            "root-cause-analysis",
+            "fix-plan"
+          ],
+          "phases": [
+            "smoke",
+            "small",
+            "full"
+          ],
+          "pinned_ref": "reviewed-2026-03-24",
+          "reviewed": true,
+          "roles": [
+            "debugger",
+            "trainer"
+          ],
+          "source": {
+            "type": "external",
+            "url": "https://skills.sh/obra/superpowers/systematic-debugging"
+          },
+          "summary": "Root-cause debugging workflow for model and training failures.",
+          "trigger_conditions": [
+            "Activate on tensor, math, runtime, convergence, or checkpoint failures."
+          ]
+        },
+        {
+          "activation_reason": "always_on",
+          "guardrails": [
+            "Prefer preserving ROCm compatibility over silently switching frameworks."
+          ],
+          "name": "rocm-training-debugger",
+          "optional": false,
+          "outputs": [
+            "rocm-debug-notes",
+            "device-fallback-plan"
+          ],
+          "phases": [
+            "smoke",
+            "small",
+            "full"
+          ],
+          "pinned_ref": "repo",
+          "resolved_path": "/Users/joelwang/Devs/auto-llm-innovator/skills/internal/rocm-training-debugger/SKILL.md",
+          "reviewed": true,
+          "roles": [
+            "debugger"
+          ],
+          "source": {
+            "path": "skills/internal/rocm-training-debugger/SKILL.md",
+            "type": "internal"
+          },
+          "summary": "ROCm-first troubleshooting for runtime, dtype, memory, and kernel issues.",
+          "trigger_conditions": [
+            "Use when device, HIP, compile, memory, or dtype failures occur."
+          ]
+        },
+        {
+          "activation_reason": "phase:smoke",
+          "guardrails": [
+            "Require tiny-batch overfit or equivalent sanity evidence before passing smoke."
+          ],
+          "name": "smoke-test-math-and-shapes",
+          "optional": false,
+          "outputs": [
+            "shape-checklist",
+            "math-sanity-report"
+          ],
+          "phases": [
+            "smoke"
+          ],
+          "pinned_ref": "repo",
+          "resolved_path": "/Users/joelwang/Devs/auto-llm-innovator/skills/internal/smoke-test-math-and-shapes/SKILL.md",
+          "reviewed": true,
+          "roles": [
+            "debugger"
+          ],
+          "source": {
+            "path": "skills/internal/smoke-test-math-and-shapes/SKILL.md",
+            "type": "internal"
+          },
+          "summary": "Validate forward math, tensor shapes, gradients, and tiny-batch sanity.",
+          "trigger_conditions": [
+            "Use whenever smoke tests fail or a new architecture is introduced."
+          ]
+        }
+      ],
+      "injected_skills": [
+        {
+          "activation_reason": "always_on",
+          "guardrails": [
+            "Prefer diagnosis over trial-and-error patching."
+          ],
+          "name": "systematic-debugging",
+          "optional": false,
+          "outputs": [
+            "root-cause-analysis",
+            "fix-plan"
+          ],
+          "phases": [
+            "smoke",
+            "small",
+            "full"
+          ],
+          "pinned_ref": "reviewed-2026-03-24",
+          "reviewed": true,
+          "roles": [
+            "debugger",
+            "trainer"
+          ],
+          "source": {
+            "type": "external",
+            "url": "https://skills.sh/obra/superpowers/systematic-debugging"
+          },
+          "summary": "Root-cause debugging workflow for model and training failures.",
+          "trigger_conditions": [
+            "Activate on tensor, math, runtime, convergence, or checkpoint failures."
+          ]
+        },
+        {
+          "activation_reason": "always_on",
+          "guardrails": [
+            "Prefer preserving ROCm compatibility over silently switching frameworks."
+          ],
+          "name": "rocm-training-debugger",
+          "optional": false,
+          "outputs": [
+            "rocm-debug-notes",
+            "device-fallback-plan"
+          ],
+          "phases": [
+            "smoke",
+            "small",
+            "full"
+          ],
+          "pinned_ref": "repo",
+          "resolved_path": "/Users/joelwang/Devs/auto-llm-innovator/skills/internal/rocm-training-debugger/SKILL.md",
+          "reviewed": true,
+          "roles": [
+            "debugger"
+          ],
+          "source": {
+            "path": "skills/internal/rocm-training-debugger/SKILL.md",
+            "type": "internal"
+          },
+          "summary": "ROCm-first troubleshooting for runtime, dtype, memory, and kernel issues.",
+          "trigger_conditions": [
+            "Use when device, HIP, compile, memory, or dtype failures occur."
+          ]
+        },
+        {
+          "activation_reason": "phase:smoke",
+          "guardrails": [
+            "Require tiny-batch overfit or equivalent sanity evidence before passing smoke."
+          ],
+          "name": "smoke-test-math-and-shapes",
+          "optional": false,
+          "outputs": [
+            "shape-checklist",
+            "math-sanity-report"
+          ],
+          "phases": [
+            "smoke"
+          ],
+          "pinned_ref": "repo",
+          "resolved_path": "/Users/joelwang/Devs/auto-llm-innovator/skills/internal/smoke-test-math-and-shapes/SKILL.md",
+          "reviewed": true,
+          "roles": [
+            "debugger"
+          ],
+          "source": {
+            "path": "skills/internal/smoke-test-math-and-shapes/SKILL.md",
+            "type": "internal"
+          },
+          "summary": "Validate forward math, tensor shapes, gradients, and tiny-batch sanity.",
+          "trigger_conditions": [
+            "Use whenever smoke tests fail or a new architecture is introduced."
+          ]
+        }
+      ],
+      "phase": "smoke",
+      "role": "debugger",
+      "skill_snippets": {
+        "rocm-training-debugger": [
+          "ROCm-first troubleshooting for runtime, dtype, memory, and kernel issues.",
+          "When to use: Use when device, HIP, compile, memory, or dtype failures occur.",
+          "Workflow: Confirm device visibility, HIP version, dtype defaults, and accelerator assumptions.",
+          "Workflow: Separate failure type:",
+          "Output: `environment findings`"
+        ],
+        "smoke-test-math-and-shapes": [
+          "Validate forward math, tensor shapes, gradients, and tiny-batch sanity.",
+          "When to use: Use whenever smoke tests fail or a new architecture is introduced.",
+          "Workflow: Verify the forward pass shape contract for embeddings, hidden states, logits, and loss.",
+          "Workflow: Check mask logic, broadcasting, residual paths, and any recurrent or memory states.",
+          "Output: `shape checklist`"
+        ],
+        "systematic-debugging": [
+          "Root-cause debugging workflow for model and training failures.",
+          "When to use: Activate on tensor, math, runtime, convergence, or checkpoint failures.",
+          "Output: root-cause-analysis",
+          "Guardrail: Prefer diagnosis over trial-and-error patching."
+        ]
+      },
+      "skipped_skills": [],
+      "system_prompt": "You are part of an autonomous LLM innovator framework. Do not fallback to a generic transformer template. Study inspirations critically, declare borrowed mechanisms, and preserve originality. Prioritize smoke-test correctness and explain root causes clearly.\n\nInjected skill directives:\n- systematic-debugging: Root-cause debugging workflow for model and training failures.\n  When to use: Activate on tensor, math, runtime, convergence, or checkpoint failures.\n  Output: root-cause-analysis\n- rocm-training-debugger: ROCm-first troubleshooting for runtime, dtype, memory, and kernel issues.\n  When to use: Use when device, HIP, compile, memory, or dtype failures occur.\n  Workflow: Confirm device visibility, HIP version, dtype defaults, and accelerator assumptions.\n- smoke-test-math-and-shapes: Validate forward math, tensor shapes, gradients, and tiny-batch sanity.\n  When to use: Use whenever smoke tests fail or a new architecture is introduced.\n  Workflow: Verify the forward pass shape contract for embeddings, hidden states, logits, and loss.\n\nForbidden skills: pytorch-lightning\n\nReview requirements:\n- Produce root-cause notes before changing architecture or runtime settings.\n",
+      "user_prompt": "Idea ID: idea-0003\nRole: debugger\nPhase: smoke\nGoal: Investigate tensor, logic, math, or training failures and propose revisions.\n\nBrief:\nInvent a topology-mixed language model with recurrent routing and originality locks.\n\nHypothesis: This idea can improve a general-purpose LM by exploring: invent topology-mixed language recurrent routing originality locks.\nTarget model: general-purpose autoregressive language model\nTokenizer: gpt2\n\nNovelty claims:\n- Combine non-default mechanisms around: invent, topology-mixed, language, recurrent\n- Reject template decoder-only stacks with only cosmetic changes.\n- Use explicit originality rationale before implementation starts.\n\nForbidden fallback patterns:\n- vanilla transformer\n- plain transformer\n- copy gpt\n- standard decoder-only stack\n- default llama clone\n\nTraining curriculum outline:\n- Smoke-test reduced variant near 600,000,000 parameters for math and logic.\n- Run a learnability check on the target-scale model with a small training subset.\n- Escalate to a production-like corpus only after the agent records why the idea looks promising.\n\nUse the injected skill directives above as compact operating guidance.\n"
+    },
+    "evaluator": {
+      "active_skills": [
+        {
+          "activation_reason": "always_on",
+          "guardrails": [
+            "Do not advance without explicit rationale grounded in evidence."
+          ],
+          "name": "phase-gate-rationale",
+          "optional": false,
+          "outputs": [
+            "phase-gate-report"
+          ],
+          "phases": [
+            "smoke",
+            "small",
+            "full"
+          ],
+          "pinned_ref": "repo",
+          "resolved_path": "/Users/joelwang/Devs/auto-llm-innovator/skills/internal/phase-gate-rationale/SKILL.md",
+          "reviewed": true,
+          "roles": [
+            "evaluator"
+          ],
+          "source": {
+            "path": "skills/internal/phase-gate-rationale/SKILL.md",
+            "type": "internal"
+          },
+          "summary": "Turn logs and metrics into continue, pivot, or stop judgments.",
+          "trigger_conditions": [
+            "Use after every phase to produce a written next-action decision."
+          ]
+        }
+      ],
+      "injected_skills": [
+        {
+          "activation_reason": "always_on",
+          "guardrails": [
+            "Do not advance without explicit rationale grounded in evidence."
+          ],
+          "name": "phase-gate-rationale",
+          "optional": false,
+          "outputs": [
+            "phase-gate-report"
+          ],
+          "phases": [
+            "smoke",
+            "small",
+            "full"
+          ],
+          "pinned_ref": "repo",
+          "resolved_path": "/Users/joelwang/Devs/auto-llm-innovator/skills/internal/phase-gate-rationale/SKILL.md",
+          "reviewed": true,
+          "roles": [
+            "evaluator"
+          ],
+          "source": {
+            "path": "skills/internal/phase-gate-rationale/SKILL.md",
+            "type": "internal"
+          },
+          "summary": "Turn logs and metrics into continue, pivot, or stop judgments.",
+          "trigger_conditions": [
+            "Use after every phase to produce a written next-action decision."
+          ]
+        }
+      ],
+      "phase": "smoke",
+      "role": "evaluator",
+      "skill_snippets": {
+        "phase-gate-rationale": [
+          "Turn logs and metrics into continue, pivot, or stop judgments.",
+          "When to use: Use after every phase to produce a written next-action decision.",
+          "Workflow: Read the latest metrics, error signals, baseline comparison, and originality status.",
+          "Workflow: Decide one action:",
+          "Output: `decision`"
+        ]
+      },
+      "skipped_skills": [],
+      "system_prompt": "You are part of an autonomous LLM innovator framework. Do not fallback to a generic transformer template. Study inspirations critically, declare borrowed mechanisms, and preserve originality. Focus on learnability signals, originality, and comparative metrics.\n\nInjected skill directives:\n- phase-gate-rationale: Turn logs and metrics into continue, pivot, or stop judgments.\n  When to use: Use after every phase to produce a written next-action decision.\n  Workflow: Read the latest metrics, error signals, baseline comparison, and originality status.\n\nForbidden skills: transformers\n\nReview requirements:\n- Every phase judgment must include an explicit next action.\n",
+      "user_prompt": "Idea ID: idea-0003\nRole: evaluator\nPhase: smoke\nGoal: Compare results against baseline, prior runs, and public references.\n\nBrief:\nInvent a topology-mixed language model with recurrent routing and originality locks.\n\nHypothesis: This idea can improve a general-purpose LM by exploring: invent topology-mixed language recurrent routing originality locks.\nTarget model: general-purpose autoregressive language model\nTokenizer: gpt2\n\nNovelty claims:\n- Combine non-default mechanisms around: invent, topology-mixed, language, recurrent\n- Reject template decoder-only stacks with only cosmetic changes.\n- Use explicit originality rationale before implementation starts.\n\nForbidden fallback patterns:\n- vanilla transformer\n- plain transformer\n- copy gpt\n- standard decoder-only stack\n- default llama clone\n\nTraining curriculum outline:\n- Smoke-test reduced variant near 600,000,000 parameters for math and logic.\n- Run a learnability check on the target-scale model with a small training subset.\n- Escalate to a production-like corpus only after the agent records why the idea looks promising.\n\nUse the injected skill directives above as compact operating guidance.\n"
+    },
+    "implementer": {
+      "active_skills": [
+        {
+          "activation_reason": "always_on",
+          "guardrails": [
+            "Use as coding guidance only; do not copy baseline architectures."
+          ],
+          "name": "deep-learning-python",
+          "optional": false,
+          "outputs": [
+            "pytorch-guidance",
+            "training-best-practices"
+          ],
+          "phases": [
+            "smoke",
+            "small",
+            "full"
+          ],
+          "pinned_ref": "reviewed-2026-03-24",
+          "reviewed": true,
+          "roles": [
+            "implementer",
+            "trainer"
+          ],
+          "source": {
+            "type": "external",
+            "url": "https://skills.sh/mindrally/skills/deep-learning-python"
+          },
+          "summary": "General PyTorch training, optimization, and modeling hygiene.",
+          "trigger_conditions": [
+            "Activate for model authoring, optimizer setup, and training loop implementation."
+          ]
+        },
+        {
+          "activation_reason": "always_on",
+          "guardrails": [
+            "Reject generic transformer drift even if reference skills are available."
+          ],
+          "name": "architecture-originality-gate",
+          "optional": false,
+          "outputs": [
+            "originality-review",
+            "revision-instructions"
+          ],
+          "phases": [
+            "smoke",
+            "small",
+            "full"
+          ],
+          "pinned_ref": "repo",
+          "resolved_path": "/Users/joelwang/Devs/auto-llm-innovator/skills/internal/architecture-originality-gate/SKILL.md",
+          "reviewed": true,
+          "roles": [
+            "implementer",
+            "reviewer"
+          ],
+          "source": {
+            "path": "skills/internal/architecture-originality-gate/SKILL.md",
+            "type": "internal"
+          },
+          "summary": "Reject generic transformer drift and near-copy architectures before implementation or advancement.",
+          "trigger_conditions": [
+            "Activate before coding, before retries, and before advancing phases."
+          ]
+        }
+      ],
+      "injected_skills": [
+        {
+          "activation_reason": "always_on",
+          "guardrails": [
+            "Use as coding guidance only; do not copy baseline architectures."
+          ],
+          "name": "deep-learning-python",
+          "optional": false,
+          "outputs": [
+            "pytorch-guidance",
+            "training-best-practices"
+          ],
+          "phases": [
+            "smoke",
+            "small",
+            "full"
+          ],
+          "pinned_ref": "reviewed-2026-03-24",
+          "reviewed": true,
+          "roles": [
+            "implementer",
+            "trainer"
+          ],
+          "source": {
+            "type": "external",
+            "url": "https://skills.sh/mindrally/skills/deep-learning-python"
+          },
+          "summary": "General PyTorch training, optimization, and modeling hygiene.",
+          "trigger_conditions": [
+            "Activate for model authoring, optimizer setup, and training loop implementation."
+          ]
+        },
+        {
+          "activation_reason": "always_on",
+          "guardrails": [
+            "Reject generic transformer drift even if reference skills are available."
+          ],
+          "name": "architecture-originality-gate",
+          "optional": false,
+          "outputs": [
+            "originality-review",
+            "revision-instructions"
+          ],
+          "phases": [
+            "smoke",
+            "small",
+            "full"
+          ],
+          "pinned_ref": "repo",
+          "resolved_path": "/Users/joelwang/Devs/auto-llm-innovator/skills/internal/architecture-originality-gate/SKILL.md",
+          "reviewed": true,
+          "roles": [
+            "implementer",
+            "reviewer"
+          ],
+          "source": {
+            "path": "skills/internal/architecture-originality-gate/SKILL.md",
+            "type": "internal"
+          },
+          "summary": "Reject generic transformer drift and near-copy architectures before implementation or advancement.",
+          "trigger_conditions": [
+            "Activate before coding, before retries, and before advancing phases."
+          ]
+        }
+      ],
+      "phase": "smoke",
+      "role": "implementer",
+      "skill_snippets": {
+        "architecture-originality-gate": [
+          "Reject generic transformer drift and near-copy architectures before implementation or advancement.",
+          "When to use: Activate before coding, before retries, and before advancing phases.",
+          "Workflow: Read the idea brief, novelty claims, forbidden fallback patterns, and any borrowed mechanisms.",
+          "Workflow: List the concrete architectural commitments, not just marketing language.",
+          "Output: `originality verdict`: pass or fail"
+        ],
+        "deep-learning-python": [
+          "General PyTorch training, optimization, and modeling hygiene.",
+          "When to use: Activate for model authoring, optimizer setup, and training loop implementation.",
+          "Output: pytorch-guidance",
+          "Guardrail: Use as coding guidance only; do not copy baseline architectures."
+        ]
+      },
+      "skipped_skills": [],
+      "system_prompt": "You are part of an autonomous LLM innovator framework. Do not fallback to a generic transformer template. Study inspirations critically, declare borrowed mechanisms, and preserve originality. Build original modeling code for idea-0003 under the 2.1B cap.\n\nInjected skill directives:\n- deep-learning-python: General PyTorch training, optimization, and modeling hygiene.\n  When to use: Activate for model authoring, optimizer setup, and training loop implementation.\n  Output: pytorch-guidance\n- architecture-originality-gate: Reject generic transformer drift and near-copy architectures before implementation or advancement.\n  When to use: Activate before coding, before retries, and before advancing phases.\n  Workflow: Read the idea brief, novelty claims, forbidden fallback patterns, and any borrowed mechanisms.\n\nForbidden skills: pytorch-lightning\n\nReview requirements:\n- Any use of transformers must stay at API-convention level.\n- Architecture originality review must pass before coding changes proceed.\n",
+      "user_prompt": "Idea ID: idea-0003\nRole: implementer\nPhase: smoke\nGoal: Author model code, configs, and wiring for the idea-specific plugin bundle.\n\nBrief:\nInvent a topology-mixed language model with recurrent routing and originality locks.\n\nHypothesis: This idea can improve a general-purpose LM by exploring: invent topology-mixed language recurrent routing originality locks.\nTarget model: general-purpose autoregressive language model\nTokenizer: gpt2\n\nNovelty claims:\n- Combine non-default mechanisms around: invent, topology-mixed, language, recurrent\n- Reject template decoder-only stacks with only cosmetic changes.\n- Use explicit originality rationale before implementation starts.\n\nForbidden fallback patterns:\n- vanilla transformer\n- plain transformer\n- copy gpt\n- standard decoder-only stack\n- default llama clone\n\nTraining curriculum outline:\n- Smoke-test reduced variant near 600,000,000 parameters for math and logic.\n- Run a learnability check on the target-scale model with a small training subset.\n- Escalate to a production-like corpus only after the agent records why the idea looks promising.\n\nUse the injected skill directives above as compact operating guidance.\n"
+    },
+    "planner": {
+      "active_skills": [
+        {
+          "activation_reason": "always_on",
+          "guardrails": [
+            "Do not auto-install any discovered skill during autonomous experiments."
+          ],
+          "name": "find-skills",
+          "optional": false,
+          "outputs": [
+            "candidate-skill-list",
+            "skill-gap-notes"
+          ],
+          "phases": [
+            "all"
+          ],
+          "pinned_ref": "reviewed-2026-03-24",
+          "reviewed": true,
+          "roles": [
+            "planner"
+          ],
+          "source": {
+            "type": "external",
+            "url": "https://skills.sh/vercel-labs/skills/find-skills"
+          },
+          "summary": "Discover future skill gaps and catalog candidates from the public directory.",
+          "trigger_conditions": [
+            "Use when the planner needs to identify missing skills or future capability gaps."
+          ]
+        },
+        {
+          "activation_reason": "always_on",
+          "guardrails": [
+            "Do not let orchestration advice override originality requirements."
+          ],
+          "name": "ml-pipeline-orchestrator",
+          "optional": false,
+          "outputs": [
+            "pipeline-structure",
+            "experiment-plan"
+          ],
+          "phases": [
+            "all"
+          ],
+          "pinned_ref": "reviewed-2026-03-24",
+          "reviewed": true,
+          "roles": [
+            "planner"
+          ],
+          "source": {
+            "type": "external",
+            "url": "https://skills.sh/anton-abyzov/specweave/ml-pipeline-orchestrator"
+          },
+          "summary": "Patterns for structured experiment flow and reproducible ML pipelines.",
+          "trigger_conditions": [
+            "Use when translating an idea into a tracked sequence of phases and retries."
+          ]
+        },
+        {
+          "activation_reason": "always_on",
+          "guardrails": [
+            "Convert inspirations into constraints and recombination options, not copy recipes."
+          ],
+          "name": "architecture-research-synthesizer",
+          "optional": false,
+          "outputs": [
+            "research-synthesis"
+          ],
+          "phases": [
+            "all"
+          ],
+          "pinned_ref": "repo",
+          "resolved_path": "/Users/joelwang/Devs/auto-llm-innovator/skills/internal/architecture-research-synthesizer/SKILL.md",
+          "reviewed": true,
+          "roles": [
+            "planner"
+          ],
+          "source": {
+            "path": "skills/internal/architecture-research-synthesizer/SKILL.md",
+            "type": "internal"
+          },
+          "summary": "Distill inspirations into design constraints, opportunities, and anti-copy notes.",
+          "trigger_conditions": [
+            "Use when the planner studies external ideas and needs original synthesis."
+          ]
+        }
+      ],
+      "injected_skills": [
+        {
+          "activation_reason": "always_on",
+          "guardrails": [
+            "Do not let orchestration advice override originality requirements."
+          ],
+          "name": "ml-pipeline-orchestrator",
+          "optional": false,
+          "outputs": [
+            "pipeline-structure",
+            "experiment-plan"
+          ],
+          "phases": [
+            "all"
+          ],
+          "pinned_ref": "reviewed-2026-03-24",
+          "reviewed": true,
+          "roles": [
+            "planner"
+          ],
+          "source": {
+            "type": "external",
+            "url": "https://skills.sh/anton-abyzov/specweave/ml-pipeline-orchestrator"
+          },
+          "summary": "Patterns for structured experiment flow and reproducible ML pipelines.",
+          "trigger_conditions": [
+            "Use when translating an idea into a tracked sequence of phases and retries."
+          ]
+        },
+        {
+          "activation_reason": "always_on",
+          "guardrails": [
+            "Convert inspirations into constraints and recombination options, not copy recipes."
+          ],
+          "name": "architecture-research-synthesizer",
+          "optional": false,
+          "outputs": [
+            "research-synthesis"
+          ],
+          "phases": [
+            "all"
+          ],
+          "pinned_ref": "repo",
+          "resolved_path": "/Users/joelwang/Devs/auto-llm-innovator/skills/internal/architecture-research-synthesizer/SKILL.md",
+          "reviewed": true,
+          "roles": [
+            "planner"
+          ],
+          "source": {
+            "path": "skills/internal/architecture-research-synthesizer/SKILL.md",
+            "type": "internal"
+          },
+          "summary": "Distill inspirations into design constraints, opportunities, and anti-copy notes.",
+          "trigger_conditions": [
+            "Use when the planner studies external ideas and needs original synthesis."
+          ]
+        }
+      ],
+      "phase": "smoke",
+      "role": "planner",
+      "skill_snippets": {
+        "architecture-research-synthesizer": [
+          "Distill inspirations into design constraints, opportunities, and anti-copy notes.",
+          "When to use: Use when the planner studies external ideas and needs original synthesis.",
+          "Workflow: Read the idea brief and any cited inspirations.",
+          "Workflow: Extract useful mechanisms, training lessons, and open questions.",
+          "Output: `research synthesis`"
+        ],
+        "ml-pipeline-orchestrator": [
+          "Patterns for structured experiment flow and reproducible ML pipelines.",
+          "When to use: Use when translating an idea into a tracked sequence of phases and retries.",
+          "Output: pipeline-structure",
+          "Guardrail: Do not let orchestration advice override originality requirements."
+        ]
+      },
+      "skipped_skills": [
+        {
+          "activation_reason": "always_on",
+          "name": "find-skills",
+          "reason": "Only inject when the planner is explicitly searching for missing capabilities."
+        }
+      ],
+      "system_prompt": "You are part of an autonomous LLM innovator framework. Do not fallback to a generic transformer template. Study inspirations critically, declare borrowed mechanisms, and preserve originality. Produce a phase-aware plan for idea idea-0003.\n\nInjected skill directives:\n- ml-pipeline-orchestrator: Patterns for structured experiment flow and reproducible ML pipelines.\n  When to use: Use when translating an idea into a tracked sequence of phases and retries.\n  Output: pipeline-structure\n- architecture-research-synthesizer: Distill inspirations into design constraints, opportunities, and anti-copy notes.\n  When to use: Use when the planner studies external ideas and needs original synthesis.\n  Workflow: Read the idea brief and any cited inspirations.\n\nForbidden skills: pytorch-lightning\n\nReview requirements:\n- Document anti-copy notes when public inspirations are used.\n- Record which missing skills were identified versus actually approved.\n",
+      "user_prompt": "Idea ID: idea-0003\nRole: planner\nPhase: smoke\nGoal: Translate the idea brief into an implementation and experiment plan.\n\nBrief:\nInvent a topology-mixed language model with recurrent routing and originality locks.\n\nHypothesis: This idea can improve a general-purpose LM by exploring: invent topology-mixed language recurrent routing originality locks.\nTarget model: general-purpose autoregressive language model\nTokenizer: gpt2\n\nNovelty claims:\n- Combine non-default mechanisms around: invent, topology-mixed, language, recurrent\n- Reject template decoder-only stacks with only cosmetic changes.\n- Use explicit originality rationale before implementation starts.\n\nForbidden fallback patterns:\n- vanilla transformer\n- plain transformer\n- copy gpt\n- standard decoder-only stack\n- default llama clone\n\nTraining curriculum outline:\n- Smoke-test reduced variant near 600,000,000 parameters for math and logic.\n- Run a learnability check on the target-scale model with a small training subset.\n- Escalate to a production-like corpus only after the agent records why the idea looks promising.\n\nUse the injected skill directives above as compact operating guidance.\n"
+    },
+    "reviewer": {
+      "active_skills": [
+        {
+          "activation_reason": "always_on",
+          "guardrails": [
+            "Reject generic transformer drift even if reference skills are available."
+          ],
+          "name": "architecture-originality-gate",
+          "optional": false,
+          "outputs": [
+            "originality-review",
+            "revision-instructions"
+          ],
+          "phases": [
+            "smoke",
+            "small",
+            "full"
+          ],
+          "pinned_ref": "repo",
+          "resolved_path": "/Users/joelwang/Devs/auto-llm-innovator/skills/internal/architecture-originality-gate/SKILL.md",
+          "reviewed": true,
+          "roles": [
+            "implementer",
+            "reviewer"
+          ],
+          "source": {
+            "path": "skills/internal/architecture-originality-gate/SKILL.md",
+            "type": "internal"
+          },
+          "summary": "Reject generic transformer drift and near-copy architectures before implementation or advancement.",
+          "trigger_conditions": [
+            "Activate before coding, before retries, and before advancing phases."
+          ]
+        },
+        {
+          "activation_reason": "always_on",
+          "guardrails": [
+            "Block advancement if provenance or artifacts are missing."
+          ],
+          "name": "experiment-ledger-auditor",
+          "optional": false,
+          "outputs": [
+            "ledger-audit"
+          ],
+          "phases": [
+            "smoke",
+            "small",
+            "full"
+          ],
+          "pinned_ref": "repo",
+          "resolved_path": "/Users/joelwang/Devs/auto-llm-innovator/skills/internal/experiment-ledger-auditor/SKILL.md",
+          "reviewed": true,
+          "roles": [
+            "reviewer"
+          ],
+          "source": {
+            "path": "skills/internal/experiment-ledger-auditor/SKILL.md",
+            "type": "internal"
+          },
+          "summary": "Ensure retries, budgets, artifacts, and lineage are persisted before new attempts.",
+          "trigger_conditions": [
+            "Use before retries and before issuing final reports."
+          ]
+        }
+      ],
+      "injected_skills": [
+        {
+          "activation_reason": "always_on",
+          "guardrails": [
+            "Reject generic transformer drift even if reference skills are available."
+          ],
+          "name": "architecture-originality-gate",
+          "optional": false,
+          "outputs": [
+            "originality-review",
+            "revision-instructions"
+          ],
+          "phases": [
+            "smoke",
+            "small",
+            "full"
+          ],
+          "pinned_ref": "repo",
+          "resolved_path": "/Users/joelwang/Devs/auto-llm-innovator/skills/internal/architecture-originality-gate/SKILL.md",
+          "reviewed": true,
+          "roles": [
+            "implementer",
+            "reviewer"
+          ],
+          "source": {
+            "path": "skills/internal/architecture-originality-gate/SKILL.md",
+            "type": "internal"
+          },
+          "summary": "Reject generic transformer drift and near-copy architectures before implementation or advancement.",
+          "trigger_conditions": [
+            "Activate before coding, before retries, and before advancing phases."
+          ]
+        },
+        {
+          "activation_reason": "always_on",
+          "guardrails": [
+            "Block advancement if provenance or artifacts are missing."
+          ],
+          "name": "experiment-ledger-auditor",
+          "optional": false,
+          "outputs": [
+            "ledger-audit"
+          ],
+          "phases": [
+            "smoke",
+            "small",
+            "full"
+          ],
+          "pinned_ref": "repo",
+          "resolved_path": "/Users/joelwang/Devs/auto-llm-innovator/skills/internal/experiment-ledger-auditor/SKILL.md",
+          "reviewed": true,
+          "roles": [
+            "reviewer"
+          ],
+          "source": {
+            "path": "skills/internal/experiment-ledger-auditor/SKILL.md",
+            "type": "internal"
+          },
+          "summary": "Ensure retries, budgets, artifacts, and lineage are persisted before new attempts.",
+          "trigger_conditions": [
+            "Use before retries and before issuing final reports."
+          ]
+        }
+      ],
+      "phase": "smoke",
+      "role": "reviewer",
+      "skill_snippets": {
+        "architecture-originality-gate": [
+          "Reject generic transformer drift and near-copy architectures before implementation or advancement.",
+          "When to use: Activate before coding, before retries, and before advancing phases.",
+          "Workflow: Read the idea brief, novelty claims, forbidden fallback patterns, and any borrowed mechanisms.",
+          "Workflow: List the concrete architectural commitments, not just marketing language.",
+          "Output: `originality verdict`: pass or fail"
+        ],
+        "experiment-ledger-auditor": [
+          "Ensure retries, budgets, artifacts, and lineage are persisted before new attempts.",
+          "When to use: Use before retries and before issuing final reports.",
+          "Workflow: Check that the attempt has:",
+          "Workflow: attempt id and parent lineage",
+          "Output: `ledger status`"
+        ]
+      },
+      "skipped_skills": [],
+      "system_prompt": "You are part of an autonomous LLM innovator framework. Do not fallback to a generic transformer template. Study inspirations critically, declare borrowed mechanisms, and preserve originality. Reject near-copy architectures and require written rationale for advancement.\n\nInjected skill directives:\n- architecture-originality-gate: Reject generic transformer drift and near-copy architectures before implementation or advancement.\n  When to use: Activate before coding, before retries, and before advancing phases.\n  Workflow: Read the idea brief, novelty claims, forbidden fallback patterns, and any borrowed mechanisms.\n- experiment-ledger-auditor: Ensure retries, budgets, artifacts, and lineage are persisted before new attempts.\n  When to use: Use before retries and before issuing final reports.\n  Workflow: Check that the attempt has:\n\nForbidden skills: transformers, pytorch-lightning\n\nReview requirements:\n- Block advancement when originality or ledger evidence is missing.\n",
+      "user_prompt": "Idea ID: idea-0003\nRole: reviewer\nPhase: smoke\nGoal: Gate originality and decide whether to continue, redesign, or stop.\n\nBrief:\nInvent a topology-mixed language model with recurrent routing and originality locks.\n\nHypothesis: This idea can improve a general-purpose LM by exploring: invent topology-mixed language recurrent routing originality locks.\nTarget model: general-purpose autoregressive language model\nTokenizer: gpt2\n\nNovelty claims:\n- Combine non-default mechanisms around: invent, topology-mixed, language, recurrent\n- Reject template decoder-only stacks with only cosmetic changes.\n- Use explicit originality rationale before implementation starts.\n\nForbidden fallback patterns:\n- vanilla transformer\n- plain transformer\n- copy gpt\n- standard decoder-only stack\n- default llama clone\n\nTraining curriculum outline:\n- Smoke-test reduced variant near 600,000,000 parameters for math and logic.\n- Run a learnability check on the target-scale model with a small training subset.\n- Escalate to a production-like corpus only after the agent records why the idea looks promising.\n\nUse the injected skill directives above as compact operating guidance.\n"
+    },
+    "trainer": {
+      "active_skills": [
+        {
+          "activation_reason": "always_on",
+          "guardrails": [
+            "Use as coding guidance only; do not copy baseline architectures."
+          ],
+          "name": "deep-learning-python",
+          "optional": false,
+          "outputs": [
+            "pytorch-guidance",
+            "training-best-practices"
+          ],
+          "phases": [
+            "smoke",
+            "small",
+            "full"
+          ],
+          "pinned_ref": "reviewed-2026-03-24",
+          "reviewed": true,
+          "roles": [
+            "implementer",
+            "trainer"
+          ],
+          "source": {
+            "type": "external",
+            "url": "https://skills.sh/mindrally/skills/deep-learning-python"
+          },
+          "summary": "General PyTorch training, optimization, and modeling hygiene.",
+          "trigger_conditions": [
+            "Activate for model authoring, optimizer setup, and training loop implementation."
+          ]
+        }
+      ],
+      "injected_skills": [
+        {
+          "activation_reason": "always_on",
+          "guardrails": [
+            "Use as coding guidance only; do not copy baseline architectures."
+          ],
+          "name": "deep-learning-python",
+          "optional": false,
+          "outputs": [
+            "pytorch-guidance",
+            "training-best-practices"
+          ],
+          "phases": [
+            "smoke",
+            "small",
+            "full"
+          ],
+          "pinned_ref": "reviewed-2026-03-24",
+          "reviewed": true,
+          "roles": [
+            "implementer",
+            "trainer"
+          ],
+          "source": {
+            "type": "external",
+            "url": "https://skills.sh/mindrally/skills/deep-learning-python"
+          },
+          "summary": "General PyTorch training, optimization, and modeling hygiene.",
+          "trigger_conditions": [
+            "Activate for model authoring, optimizer setup, and training loop implementation."
+          ]
+        }
+      ],
+      "phase": "smoke",
+      "role": "trainer",
+      "skill_snippets": {
+        "deep-learning-python": [
+          "General PyTorch training, optimization, and modeling hygiene.",
+          "When to use: Activate for model authoring, optimizer setup, and training loop implementation.",
+          "Output: pytorch-guidance",
+          "Guardrail: Use as coding guidance only; do not copy baseline architectures."
+        ]
+      },
+      "skipped_skills": [],
+      "system_prompt": "You are part of an autonomous LLM innovator framework. Do not fallback to a generic transformer template. Study inspirations critically, declare borrowed mechanisms, and preserve originality. Use GPT-2 tokenization and respect visible retry and budget metadata.\n\nInjected skill directives:\n- deep-learning-python: General PyTorch training, optimization, and modeling hygiene.\n  When to use: Activate for model authoring, optimizer setup, and training loop implementation.\n  Output: pytorch-guidance\n\nReview requirements:\n- External tracking remains off unless explicitly configured.\n- Record requested and consumed resources for every attempt.\n",
+      "user_prompt": "Idea ID: idea-0003\nRole: trainer\nPhase: smoke\nGoal: Run phase-specific training and record budget, metrics, and anomalies.\n\nBrief:\nInvent a topology-mixed language model with recurrent routing and originality locks.\n\nHypothesis: This idea can improve a general-purpose LM by exploring: invent topology-mixed language recurrent routing originality locks.\nTarget model: general-purpose autoregressive language model\nTokenizer: gpt2\n\nNovelty claims:\n- Combine non-default mechanisms around: invent, topology-mixed, language, recurrent\n- Reject template decoder-only stacks with only cosmetic changes.\n- Use explicit originality rationale before implementation starts.\n\nForbidden fallback patterns:\n- vanilla transformer\n- plain transformer\n- copy gpt\n- standard decoder-only stack\n- default llama clone\n\nTraining curriculum outline:\n- Smoke-test reduced variant near 600,000,000 parameters for math and logic.\n- Run a learnability check on the target-scale model with a small training subset.\n- Escalate to a production-like corpus only after the agent records why the idea looks promising.\n\nUse the injected skill directives above as compact operating guidance.\n"
+    }
+  }
+}

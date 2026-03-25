@@ -49,6 +49,7 @@ def test_full_run_records_attempts_without_overwrite(tmp_path: Path):
     assert "smoke" in status["attempts"][0]["phases"]
     assert (tmp_path / "ideas" / result.idea_id / "reports" / "attempt-0001.md").exists()
     assert (tmp_path / "ideas" / result.idea_id / "runs" / "attempt-0001" / "smoke" / "skills.json").exists()
+    assert (tmp_path / "ideas" / result.idea_id / "runs" / "attempt-0001" / "smoke" / "prompt.json").exists()
 
 
 def test_compare_and_report(tmp_path: Path):
@@ -69,3 +70,18 @@ def test_partial_run_marks_attempt_partial(tmp_path: Path):
     engine.run(result.idea_id, phase="smoke")
     status = engine.status(result.idea_id)
     assert status["attempts"][0]["state"] == "partial"
+
+
+def test_phase_skill_artifact_tracks_injected_and_skipped_skills(tmp_path: Path):
+    _bootstrap_baseline(tmp_path)
+    engine = InnovatorEngine(root=tmp_path)
+    result = engine.submit("Invent a planner-heavy architecture exploration workflow.")
+    engine.run(result.idea_id, phase="smoke")
+    skill_payload = json.loads(
+        (tmp_path / "ideas" / result.idea_id / "runs" / "attempt-0001" / "smoke" / "skills.json").read_text(encoding="utf-8")
+    )
+    planner_payload = skill_payload["roles"]["planner"]
+    assert "active_skills" in planner_payload
+    assert "injected_skills" in planner_payload
+    assert "skipped_skills" in planner_payload
+    assert any(item["name"] == "find-skills" for item in planner_payload["active_skills"])

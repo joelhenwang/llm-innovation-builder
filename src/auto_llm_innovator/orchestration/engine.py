@@ -13,6 +13,7 @@ from auto_llm_innovator.modeling.template import render_eval_template, render_mo
 from auto_llm_innovator.orchestration.agents import agent_definitions
 from auto_llm_innovator.orchestration.opencode import OpenCodeAdapter
 from auto_llm_innovator.skills import (
+    build_agent_prompt,
     doctor_skill_registry,
     explain_skill_profile,
     list_skills,
@@ -174,18 +175,50 @@ class InnovatorEngine:
         phases = PHASES if phase == "all" else (phase,)
         results = []
         run_dir = ensure_dir(idea_dir / "runs" / attempt_id)
-        write_json(run_dir / "opencode_plan.json", self.opencode.command_preview("run", spec.raw_brief, idea_dir))
+        roles = list(agent_definitions(spec, root=self.root))
+        planner_prompt = build_agent_prompt(spec, role="planner", phase=phases[0], root=self.root)
+        write_json(
+            run_dir / "opencode_plan.json",
+            {
+                "role": "planner",
+                "phase": phases[0],
+                "prompt_payload": planner_prompt.to_dict(),
+                "command_preview": self.opencode.command_preview(
+                    "run", planner_prompt.system_prompt + "\n" + planner_prompt.user_prompt, idea_dir
+                ),
+            },
+        )
         for current_phase in phases:
             phase_dir = ensure_dir(run_dir / current_phase)
             result = execute_phase(idea_dir=idea_dir, attempt_id=attempt_id, phase=current_phase, run_dir=phase_dir)
+            prompt_payload = {
+                "idea_id": idea_id,
+                "attempt_id": attempt_id,
+                "phase": current_phase,
+                "roles": {
+                    role: build_agent_prompt(spec, role=role, phase=current_phase, root=self.root).to_dict()
+                    for role in roles
+                },
+            }
+            prompt_path = phase_dir / "prompt.json"
+            write_json(prompt_path, prompt_payload)
             skill_usage = {
                 "phase": current_phase,
-                "roles": {role: explain_skill_profile(self.root, role, phase=current_phase) for role in agent_definitions(spec, root=self.root)},
+                "roles": {
+                    role: {
+                        "active_skills": prompt_payload["roles"][role]["active_skills"],
+                        "injected_skills": prompt_payload["roles"][role]["injected_skills"],
+                        "skipped_skills": prompt_payload["roles"][role]["skipped_skills"],
+                    }
+                    for role in roles
+                },
             }
             skill_usage_path = phase_dir / "skills.json"
             write_json(skill_usage_path, skill_usage)
+            result.artifacts_produced.append(str(prompt_path))
             result.artifacts_produced.append(str(skill_usage_path))
             result.reviewer_notes.append("Skill activation snapshot recorded.")
+            result.reviewer_notes.append("Prompt payload recorded.")
             record_phase_result(idea_dir, result)
             results.append(result)
 
@@ -249,6 +282,14 @@ class InnovatorEngine:
 
     def skills_explain(self, role: str, phase: str | None = None) -> dict:
         return explain_skill_profile(self.root, role, phase=phase)
+
+    def skills_prompt_view(self, role: str, phase: str, idea_id: str | None = None) -> dict:
+        if idea_id is not None:
+            idea_dir = self.ideas_dir / idea_id
+            spec = IdeaSpec.from_dict(read_json(idea_dir / "idea_spec.json"))
+        else:
+            spec = normalize_idea_spec("preview-idea", f"Preview prompt for role={role} phase={phase}.")
+        return build_agent_prompt(spec, role=role, phase=phase, root=self.root).to_dict()
 
     def skills_sync(self) -> dict:
         return sync_reviewed_skills(self.root)

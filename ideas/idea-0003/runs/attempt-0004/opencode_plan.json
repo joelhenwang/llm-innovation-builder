@@ -1,0 +1,185 @@
+{
+  "command_preview": {
+    "available": true,
+    "command": [
+      "opencode",
+      "run",
+      "You are part of an autonomous LLM innovator framework. Do not fallback to a generic transformer template. Study inspirations critically, declare borrowed mechanisms, and preserve originality. Produce a phase-aware plan for idea idea-0003.\n\nInjected skill directives:\n- ml-pipeline-orchestrator: Patterns for structured experiment flow and reproducible ML pipelines.\n  When to use: Use when translating an idea into a tracked sequence of phases and retries.\n  Output: pipeline-structure\n- architecture-research-synthesizer: Distill inspirations into design constraints, opportunities, and anti-copy notes.\n  When to use: Use when the planner studies external ideas and needs original synthesis.\n  Workflow: Read the idea brief and any cited inspirations.\n\nForbidden skills: pytorch-lightning\n\nReview requirements:\n- Document anti-copy notes when public inspirations are used.\n- Record which missing skills were identified versus actually approved.\n\nIdea ID: idea-0003\nRole: planner\nPhase: smoke\nGoal: Translate the idea brief into an implementation and experiment plan.\n\nBrief:\nInvent a topology-mixed language model with recurrent routing and originality locks.\n\nHypothesis: This idea can improve a general-purpose LM by exploring: invent topology-mixed language recurrent routing originality locks.\nTarget model: general-purpose autoregressive language model\nTokenizer: gpt2\n\nNovelty claims:\n- Combine non-default mechanisms around: invent, topology-mixed, language, recurrent\n- Reject template decoder-only stacks with only cosmetic changes.\n- Use explicit originality rationale before implementation starts.\n\nForbidden fallback patterns:\n- vanilla transformer\n- plain transformer\n- copy gpt\n- standard decoder-only stack\n- default llama clone\n\nTraining curriculum outline:\n- Smoke-test reduced variant near 600,000,000 parameters for math and logic.\n- Run a learnability check on the target-scale model with a small training subset.\n- Escalate to a production-like corpus only after the agent records why the idea looks promising.\n\nUse the injected skill directives above as compact operating guidance.\n"
+    ],
+    "cwd": "/Users/joelwang/Devs/auto-llm-innovator/ideas/idea-0003"
+  },
+  "phase": "smoke",
+  "prompt_payload": {
+    "active_skills": [
+      {
+        "activation_reason": "always_on",
+        "guardrails": [
+          "Do not auto-install any discovered skill during autonomous experiments."
+        ],
+        "name": "find-skills",
+        "optional": false,
+        "outputs": [
+          "candidate-skill-list",
+          "skill-gap-notes"
+        ],
+        "phases": [
+          "all"
+        ],
+        "pinned_ref": "reviewed-2026-03-24",
+        "reviewed": true,
+        "roles": [
+          "planner"
+        ],
+        "source": {
+          "type": "external",
+          "url": "https://skills.sh/vercel-labs/skills/find-skills"
+        },
+        "summary": "Discover future skill gaps and catalog candidates from the public directory.",
+        "trigger_conditions": [
+          "Use when the planner needs to identify missing skills or future capability gaps."
+        ]
+      },
+      {
+        "activation_reason": "always_on",
+        "guardrails": [
+          "Do not let orchestration advice override originality requirements."
+        ],
+        "name": "ml-pipeline-orchestrator",
+        "optional": false,
+        "outputs": [
+          "pipeline-structure",
+          "experiment-plan"
+        ],
+        "phases": [
+          "all"
+        ],
+        "pinned_ref": "reviewed-2026-03-24",
+        "reviewed": true,
+        "roles": [
+          "planner"
+        ],
+        "source": {
+          "type": "external",
+          "url": "https://skills.sh/anton-abyzov/specweave/ml-pipeline-orchestrator"
+        },
+        "summary": "Patterns for structured experiment flow and reproducible ML pipelines.",
+        "trigger_conditions": [
+          "Use when translating an idea into a tracked sequence of phases and retries."
+        ]
+      },
+      {
+        "activation_reason": "always_on",
+        "guardrails": [
+          "Convert inspirations into constraints and recombination options, not copy recipes."
+        ],
+        "name": "architecture-research-synthesizer",
+        "optional": false,
+        "outputs": [
+          "research-synthesis"
+        ],
+        "phases": [
+          "all"
+        ],
+        "pinned_ref": "repo",
+        "resolved_path": "/Users/joelwang/Devs/auto-llm-innovator/skills/internal/architecture-research-synthesizer/SKILL.md",
+        "reviewed": true,
+        "roles": [
+          "planner"
+        ],
+        "source": {
+          "path": "skills/internal/architecture-research-synthesizer/SKILL.md",
+          "type": "internal"
+        },
+        "summary": "Distill inspirations into design constraints, opportunities, and anti-copy notes.",
+        "trigger_conditions": [
+          "Use when the planner studies external ideas and needs original synthesis."
+        ]
+      }
+    ],
+    "injected_skills": [
+      {
+        "activation_reason": "always_on",
+        "guardrails": [
+          "Do not let orchestration advice override originality requirements."
+        ],
+        "name": "ml-pipeline-orchestrator",
+        "optional": false,
+        "outputs": [
+          "pipeline-structure",
+          "experiment-plan"
+        ],
+        "phases": [
+          "all"
+        ],
+        "pinned_ref": "reviewed-2026-03-24",
+        "reviewed": true,
+        "roles": [
+          "planner"
+        ],
+        "source": {
+          "type": "external",
+          "url": "https://skills.sh/anton-abyzov/specweave/ml-pipeline-orchestrator"
+        },
+        "summary": "Patterns for structured experiment flow and reproducible ML pipelines.",
+        "trigger_conditions": [
+          "Use when translating an idea into a tracked sequence of phases and retries."
+        ]
+      },
+      {
+        "activation_reason": "always_on",
+        "guardrails": [
+          "Convert inspirations into constraints and recombination options, not copy recipes."
+        ],
+        "name": "architecture-research-synthesizer",
+        "optional": false,
+        "outputs": [
+          "research-synthesis"
+        ],
+        "phases": [
+          "all"
+        ],
+        "pinned_ref": "repo",
+        "resolved_path": "/Users/joelwang/Devs/auto-llm-innovator/skills/internal/architecture-research-synthesizer/SKILL.md",
+        "reviewed": true,
+        "roles": [
+          "planner"
+        ],
+        "source": {
+          "path": "skills/internal/architecture-research-synthesizer/SKILL.md",
+          "type": "internal"
+        },
+        "summary": "Distill inspirations into design constraints, opportunities, and anti-copy notes.",
+        "trigger_conditions": [
+          "Use when the planner studies external ideas and needs original synthesis."
+        ]
+      }
+    ],
+    "phase": "smoke",
+    "role": "planner",
+    "skill_snippets": {
+      "architecture-research-synthesizer": [
+        "Distill inspirations into design constraints, opportunities, and anti-copy notes.",
+        "When to use: Use when the planner studies external ideas and needs original synthesis.",
+        "Workflow: Read the idea brief and any cited inspirations.",
+        "Workflow: Extract useful mechanisms, training lessons, and open questions.",
+        "Output: `research synthesis`"
+      ],
+      "ml-pipeline-orchestrator": [
+        "Patterns for structured experiment flow and reproducible ML pipelines.",
+        "When to use: Use when translating an idea into a tracked sequence of phases and retries.",
+        "Output: pipeline-structure",
+        "Guardrail: Do not let orchestration advice override originality requirements."
+      ]
+    },
+    "skipped_skills": [
+      {
+        "activation_reason": "always_on",
+        "name": "find-skills",
+        "reason": "Only inject when the planner is explicitly searching for missing capabilities."
+      }
+    ],
+    "system_prompt": "You are part of an autonomous LLM innovator framework. Do not fallback to a generic transformer template. Study inspirations critically, declare borrowed mechanisms, and preserve originality. Produce a phase-aware plan for idea idea-0003.\n\nInjected skill directives:\n- ml-pipeline-orchestrator: Patterns for structured experiment flow and reproducible ML pipelines.\n  When to use: Use when translating an idea into a tracked sequence of phases and retries.\n  Output: pipeline-structure\n- architecture-research-synthesizer: Distill inspirations into design constraints, opportunities, and anti-copy notes.\n  When to use: Use when the planner studies external ideas and needs original synthesis.\n  Workflow: Read the idea brief and any cited inspirations.\n\nForbidden skills: pytorch-lightning\n\nReview requirements:\n- Document anti-copy notes when public inspirations are used.\n- Record which missing skills were identified versus actually approved.\n",
+    "user_prompt": "Idea ID: idea-0003\nRole: planner\nPhase: smoke\nGoal: Translate the idea brief into an implementation and experiment plan.\n\nBrief:\nInvent a topology-mixed language model with recurrent routing and originality locks.\n\nHypothesis: This idea can improve a general-purpose LM by exploring: invent topology-mixed language recurrent routing originality locks.\nTarget model: general-purpose autoregressive language model\nTokenizer: gpt2\n\nNovelty claims:\n- Combine non-default mechanisms around: invent, topology-mixed, language, recurrent\n- Reject template decoder-only stacks with only cosmetic changes.\n- Use explicit originality rationale before implementation starts.\n\nForbidden fallback patterns:\n- vanilla transformer\n- plain transformer\n- copy gpt\n- standard decoder-only stack\n- default llama clone\n\nTraining curriculum outline:\n- Smoke-test reduced variant near 600,000,000 parameters for math and logic.\n- Run a learnability check on the target-scale model with a small training subset.\n- Escalate to a production-like corpus only after the agent records why the idea looks promising.\n\nUse the injected skill directives above as compact operating guidance.\n"
+  },
+  "role": "planner"
+}

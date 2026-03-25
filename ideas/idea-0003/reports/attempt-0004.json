@@ -1,0 +1,10 @@
+{
+  "baseline_id": "internal-reference-v1",
+  "comparisons": {
+    "smoke": {
+      "baseline_loss": 6.0,
+      "delta_vs_baseline": -0.09999999999999964,
+      "observed_loss": 5.9
+    }
+  }
+}

@@ -40,6 +40,8 @@ def build_parser() -> argparse.ArgumentParser:
     explain = skill_parsers.add_parser("explain", help="Explain which skills a role uses")
     explain.add_argument("role", choices=["planner", "implementer", "debugger", "trainer", "evaluator", "reviewer"])
     explain.add_argument("--phase", choices=["smoke", "small", "full"], default=None)
+    explain.add_argument("--prompt-view", action="store_true", help="Show the prompt-builder payload instead of raw routing metadata")
+    explain.add_argument("--idea-id", default=None, help="Optional idea id to use for prompt previews")
     skill_parsers.add_parser("sync", help="Materialize the reviewed external skill sync manifest")
 
     return parser
@@ -77,6 +79,10 @@ def main(argv: list[str] | None = None) -> int:
             print(json.dumps(engine.skills_doctor(), indent=2))
             return 0
         if args.skills_command == "explain":
+            if args.prompt_view:
+                phase = args.phase or "smoke"
+                print(json.dumps(engine.skills_prompt_view(args.role, phase=phase, idea_id=args.idea_id), indent=2))
+                return 0
             print(json.dumps(engine.skills_explain(args.role, phase=args.phase), indent=2))
             return 0
         if args.skills_command == "sync":

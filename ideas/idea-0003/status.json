@@ -67,8 +67,80 @@
         }
       },
       "state": "partial"
+    },
+    {
+      "attempt_id": "attempt-0003",
+      "completed_at": "2026-03-25T20:15:32.170927+00:00",
+      "created_at": "2026-03-25T20:15:32.157801+00:00",
+      "parent_attempt": null,
+      "phases": {
+        "smoke": {
+          "artifacts_produced": [
+            "/Users/joelwang/Devs/auto-llm-innovator/ideas/idea-0003/runs/attempt-0003/smoke/smoke-summary.json",
+            "/Users/joelwang/Devs/auto-llm-innovator/ideas/idea-0003/runs/attempt-0003/smoke/prompt.json",
+            "/Users/joelwang/Devs/auto-llm-innovator/ideas/idea-0003/runs/attempt-0003/smoke/skills.json"
+          ],
+          "attempt_id": "attempt-0003",
+          "consumed_budget": {
+            "device": "rocm",
+            "requested_parameters": 600000000,
+            "steps": 8
+          },
+          "failure_signals": [],
+          "idea_id": "idea-0003",
+          "key_metrics": {
+            "loss": 5.9,
+            "steps": 8
+          },
+          "next_action_recommendation": "advance",
+          "phase": "smoke",
+          "reviewer_notes": [
+            "Synthetic trainer scaffold executed successfully.",
+            "Skill activation snapshot recorded.",
+            "Prompt payload recorded."
+          ],
+          "status": "passed"
+        }
+      },
+      "state": "partial"
+    },
+    {
+      "attempt_id": "attempt-0004",
+      "completed_at": "2026-03-25T20:16:10.435598+00:00",
+      "created_at": "2026-03-25T20:16:10.422620+00:00",
+      "parent_attempt": null,
+      "phases": {
+        "smoke": {
+          "artifacts_produced": [
+            "/Users/joelwang/Devs/auto-llm-innovator/ideas/idea-0003/runs/attempt-0004/smoke/smoke-summary.json",
+            "/Users/joelwang/Devs/auto-llm-innovator/ideas/idea-0003/runs/attempt-0004/smoke/prompt.json",
+            "/Users/joelwang/Devs/auto-llm-innovator/ideas/idea-0003/runs/attempt-0004/smoke/skills.json"
+          ],
+          "attempt_id": "attempt-0004",
+          "consumed_budget": {
+            "device": "rocm",
+            "requested_parameters": 600000000,
+            "steps": 8
+          },
+          "failure_signals": [],
+          "idea_id": "idea-0003",
+          "key_metrics": {
+            "loss": 5.9,
+            "steps": 8
+          },
+          "next_action_recommendation": "advance",
+          "phase": "smoke",
+          "reviewer_notes": [
+            "Synthetic trainer scaffold executed successfully.",
+            "Skill activation snapshot recorded.",
+            "Prompt payload recorded."
+          ],
+          "status": "passed"
+        }
+      },
+      "state": "partial"
     }
   ],
   "idea_id": "idea-0003",
-  "latest_report": "/Users/joelwang/Devs/auto-llm-innovator/ideas/idea-0003/reports/attempt-0002.md"
+  "latest_report": "/Users/joelwang/Devs/auto-llm-innovator/ideas/idea-0003/reports/attempt-0004.md"
 }
