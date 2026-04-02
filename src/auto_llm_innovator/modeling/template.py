@@ -2,12 +2,19 @@ from __future__ import annotations
 
 from textwrap import dedent
 
+from auto_llm_innovator.design_ir.models import DesignIR
 from auto_llm_innovator.idea_spec.models import IdeaSpec
 
 
-def render_model_template(spec: IdeaSpec) -> str:
-    architecture_name = f"{spec.idea_id.replace('-', '_')}_creative_lm"
-    borrowed = ", ".join(spec.borrowed_mechanisms) if spec.borrowed_mechanisms else "[]"
+def render_model_template(spec: IdeaSpec, design_ir: DesignIR) -> str:
+    architecture_name = design_ir.architecture.pattern_label
+    borrowed = spec.borrowed_mechanisms if spec.borrowed_mechanisms else []
+    module_names = [module.name for module in design_ir.modules]
+    supports = {
+        "recurrent_state": design_ir.architecture.state_semantics.has_recurrent_state,
+        "external_memory": design_ir.architecture.state_semantics.has_external_memory,
+        "cache_path": design_ir.architecture.state_semantics.has_cache_path,
+    }
     return dedent(
         f"""
         from __future__ import annotations
@@ -35,7 +42,7 @@ def render_model_template(spec: IdeaSpec) -> str:
 
             def __post_init__(self) -> None:
                 if self.borrowed_mechanisms is None:
-                    self.borrowed_mechanisms = {borrowed}
+                    self.borrowed_mechanisms = {borrowed!r}
 
 
         class CreativeIdeaModel(nn.Module if nn is not None else object):
@@ -49,67 +56,75 @@ def render_model_template(spec: IdeaSpec) -> str:
                     self.gate = nn.Linear(min(config.hidden_size, 256), min(config.hidden_size, 256))
                     self.head = nn.Linear(min(config.hidden_size, 256), 1024)
 
-            def forward(self, input_ids):
+            def forward(self, input_ids, state_tensor=None, memory_tensor=None, cache_tensor=None):
                 if nn is None or torch is None:
-                    return {{"logits_shape": [len(input_ids), 1024] if hasattr(input_ids, "__len__") else [1, 1024]}}
-                hidden = self.embedding(input_ids)
+                    batch = len(input_ids) if hasattr(input_ids, "__len__") else 1
+                    seq = len(input_ids[0]) if batch and hasattr(input_ids[0], "__len__") else 1
+                    logits = [[[0.0 for _ in range(1024)] for _ in range(seq)] for _ in range(batch)]
+                    output = {{"logits": logits}}
+                    if state_tensor is not None:
+                        output["state_tensor"] = state_tensor
+                    if memory_tensor is not None:
+                        output["memory_tensor"] = memory_tensor
+                    if cache_tensor is not None:
+                        output["cache_tensor"] = cache_tensor
+                    return output
+                hidden = self.embedding(torch.as_tensor(input_ids, dtype=torch.long))
                 gated = torch.tanh(self.gate(hidden))
                 logits = self.head(gated)
-                return logits
+                output = {{"logits": logits.detach().cpu().tolist()}}
+                if state_tensor is not None:
+                    output["state_tensor"] = state_tensor
+                if memory_tensor is not None:
+                    output["memory_tensor"] = memory_tensor
+                if cache_tensor is not None:
+                    output["cache_tensor"] = cache_tensor
+                return output
 
 
         def build_model(config: ModelConfig | None = None) -> CreativeIdeaModel:
             return CreativeIdeaModel(config or ModelConfig())
+
+
+        def describe_plugin() -> dict:
+            return {{
+                "architecture_name": "{architecture_name}",
+                "module_names": {module_names!r},
+                "supports": {supports!r},
+            }}
+
+
+        def register_evaluation_hooks() -> dict:
+            def evaluation_task_1(**kwargs) -> dict:
+                return {{"hook": "default-runtime-eval", "loss_snapshot": round(kwargs["loss_value"], 4)}}
+
+            return {{"evaluation_task_1": evaluation_task_1}}
         """
     ).strip() + "\n"
 
 
-def render_train_template(spec: IdeaSpec) -> str:
+def render_train_template(spec: IdeaSpec, design_ir: DesignIR) -> str:
     return dedent(
         f"""
         from __future__ import annotations
 
-        import json
         from pathlib import Path
 
-        from model import ModelConfig, build_model
+        import model as plugin_module
 
-
-        PHASE_DEFAULTS = {{
-            "smoke": {{"loss": 5.9, "steps": 8}},
-            "small": {{"loss": 4.3, "steps": 24}},
-            "full": {{"loss": 3.8, "steps": 96}},
-        }}
+        from auto_llm_innovator.runtime import run_phase_with_plugin
 
 
         def run_phase(phase: str, run_dir: str, config_path: str, attempt_id: str) -> dict:
-            config = json.loads(Path(config_path).read_text(encoding="utf-8"))
-            model = build_model(ModelConfig())
-            metrics = PHASE_DEFAULTS[phase].copy()
-            metrics["target_parameters"] = config["target_parameters"]
-            metrics["tokenizer"] = "{spec.tokenizer}"
-            Path(run_dir).mkdir(parents=True, exist_ok=True)
-            artifact = Path(run_dir) / f"{{phase}}-summary.json"
-            artifact.write_text(json.dumps({{
-                "phase": phase,
-                "attempt_id": attempt_id,
-                "metrics": metrics,
-                "architecture_name": model.config.architecture_name,
-                "novelty_claims": {spec.novelty_claims!r},
-            }}, indent=2), encoding="utf-8")
-            return {{
-                "status": "passed",
-                "key_metrics": {{"loss": metrics["loss"], "steps": metrics["steps"]}},
-                "failure_signals": [],
-                "artifacts_produced": [str(artifact)],
-                "reviewer_notes": ["Synthetic trainer scaffold executed successfully."],
-                "next_action_recommendation": "advance" if phase != "full" else "complete",
-                "consumed_budget": {{
-                    "requested_parameters": config["target_parameters"],
-                    "steps": metrics["steps"],
-                    "device": "rocm" if config.get("prefer_rocm") else "cpu-dry-run",
-                }},
-            }}
+            idea_dir = Path(__file__).resolve().parent
+            return run_phase_with_plugin(
+                phase=phase,
+                idea_dir=str(idea_dir),
+                run_dir=run_dir,
+                config_path=config_path,
+                attempt_id=attempt_id,
+                plugin_module=plugin_module,
+            )
         """
     ).strip() + "\n"
 

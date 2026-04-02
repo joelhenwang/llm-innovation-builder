@@ -4,6 +4,7 @@ import argparse
 import json
 from pathlib import Path
 
+from auto_llm_innovator.handoff import HandoffValidationError
 from auto_llm_innovator.orchestration import InnovatorEngine
 
 
@@ -12,8 +13,10 @@ def build_parser() -> argparse.ArgumentParser:
     parser.add_argument("--root", default=str(Path.cwd()), help="Project root containing ideas/ and baselines/")
     subparsers = parser.add_subparsers(dest="command", required=True)
 
-    submit = subparsers.add_parser("submit", help="Submit a free-text idea")
-    submit.add_argument("brief", help="Free-text idea brief")
+    submit = subparsers.add_parser("submit", help="Submit a free-text idea or structured bundle")
+    submit_group = submit.add_mutually_exclusive_group(required=True)
+    submit_group.add_argument("brief", nargs="?", help="Free-text idea brief")
+    submit_group.add_argument("--bundle-file", help="Path to a structured researcher bundle JSON file")
 
     run = subparsers.add_parser("run", help="Run an idea lifecycle phase")
     run.add_argument("idea_id")
@@ -52,42 +55,45 @@ def main(argv: list[str] | None = None) -> int:
     args = parser.parse_args(argv)
     engine = InnovatorEngine(root=Path(args.root))
 
-    if args.command == "submit":
-        payload = engine.submit(args.brief).to_dict()
-        print(json.dumps(payload, indent=2))
-        return 0
-    if args.command == "run":
-        print(json.dumps(engine.run(args.idea_id, phase=args.phase), indent=2))
-        return 0
-    if args.command == "resume":
-        print(json.dumps(engine.resume(args.idea_id), indent=2))
-        return 0
-    if args.command == "status":
-        print(json.dumps(engine.status(args.idea_id), indent=2))
-        return 0
-    if args.command == "compare":
-        print(json.dumps(engine.compare(args.idea_id, baseline=args.baseline), indent=2))
-        return 0
-    if args.command == "report":
-        print(engine.report(args.idea_id))
-        return 0
-    if args.command == "skills":
-        if args.skills_command == "list":
-            print(json.dumps(engine.skills_list(), indent=2))
+    try:
+        if args.command == "submit":
+            payload = engine.submit(args.brief, bundle_file=args.bundle_file).to_dict()
+            print(json.dumps(payload, indent=2))
             return 0
-        if args.skills_command == "doctor":
-            print(json.dumps(engine.skills_doctor(), indent=2))
+        if args.command == "run":
+            print(json.dumps(engine.run(args.idea_id, phase=args.phase), indent=2))
             return 0
-        if args.skills_command == "explain":
-            if args.prompt_view:
-                phase = args.phase or "smoke"
-                print(json.dumps(engine.skills_prompt_view(args.role, phase=phase, idea_id=args.idea_id), indent=2))
+        if args.command == "resume":
+            print(json.dumps(engine.resume(args.idea_id), indent=2))
+            return 0
+        if args.command == "status":
+            print(json.dumps(engine.status(args.idea_id), indent=2))
+            return 0
+        if args.command == "compare":
+            print(json.dumps(engine.compare(args.idea_id, baseline=args.baseline), indent=2))
+            return 0
+        if args.command == "report":
+            print(engine.report(args.idea_id))
+            return 0
+        if args.command == "skills":
+            if args.skills_command == "list":
+                print(json.dumps(engine.skills_list(), indent=2))
                 return 0
-            print(json.dumps(engine.skills_explain(args.role, phase=args.phase), indent=2))
-            return 0
-        if args.skills_command == "sync":
-            print(json.dumps(engine.skills_sync(), indent=2))
-            return 0
+            if args.skills_command == "doctor":
+                print(json.dumps(engine.skills_doctor(), indent=2))
+                return 0
+            if args.skills_command == "explain":
+                if args.prompt_view:
+                    phase = args.phase or "smoke"
+                    print(json.dumps(engine.skills_prompt_view(args.role, phase=phase, idea_id=args.idea_id), indent=2))
+                    return 0
+                print(json.dumps(engine.skills_explain(args.role, phase=args.phase), indent=2))
+                return 0
+            if args.skills_command == "sync":
+                print(json.dumps(engine.skills_sync(), indent=2))
+                return 0
+    except HandoffValidationError as exc:
+        parser.exit(2, f"Validation error: {exc}\n")
 
     parser.error(f"Unhandled command: {args.command}")
     return 2

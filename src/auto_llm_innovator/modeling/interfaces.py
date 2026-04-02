@@ -31,6 +31,10 @@ class PhaseResult:
     reviewer_notes: list[str]
     next_action_recommendation: str
     consumed_budget: dict[str, Any]
+    repair_attempted: bool = False
+    repair_count: int = 0
+    repair_outcome: str = "not_attempted"
+    failure_classification: dict[str, Any] | None = None
 
     def to_dict(self) -> dict[str, Any]:
         return asdict(self)
